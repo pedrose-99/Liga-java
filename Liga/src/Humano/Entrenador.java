@@ -1,6 +1,7 @@
 package Humano;
 
-public class Entrenador 
+public class Entrenador extends Persona
+
 {
-    
+    private int aniosExperiencia;
 }

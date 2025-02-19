@@ -1,6 +1,7 @@
 package Humano;
 
-public class Jugador 
+public class Jugador extends Persona
+
 {
-    
+   
 }

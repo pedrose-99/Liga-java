@@ -1,6 +1,8 @@
 package Humano;
 
-public class Portero 
+public class Portero extends Persona
+
 {
+    
     
 }
