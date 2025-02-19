@@ -1,9 +1,9 @@
 Aquí ponemos la estructura de trabajo.
 
-Pedro;
+Pedro; Generar datos. 
 
-Silvia;
+Silvia; Funcion partidos.
 
-Álvaro;
+Álvaro; Funcion liga.
 
-Diego;
+Diego; Jornadas.
