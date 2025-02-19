@@ -24,6 +24,8 @@ public class Jornada {
         this.partidos = partidos;
     }
 
+    
+
 
 
     

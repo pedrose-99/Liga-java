@@ -1,29 +1,29 @@
 package Liga;
 
 public class Partido {
-    int equipolocal;
-    int equipovisitante;
+    String equipolocal;
+    String equipovisitante;
     int resultado;
     int numgoles;
     void simularpartidos(int Partido){
 
 }
-    public Partido(int equipolocal, int equipovisitante, int resultado, int numgoles) {
+    public Partido(String equipolocal, String equipovisitante, int resultado, int numgoles) {
         this.equipolocal = equipolocal;
         this.equipovisitante = equipovisitante;
         this.resultado = resultado;
         this.numgoles = numgoles;
     }
-    public int getEquipolocal() {
+    public String getEquipolocal() {
         return equipolocal;
     }
-    public void setEquipolocal(int equipolocal) {
+    public void setEquipolocal(String equipolocal) {
         this.equipolocal = equipolocal;
     }
-    public int getEquipovisitante() {
+    public String getEquipovisitante() {
         return equipovisitante;
     }
-    public void setEquipovisitante(int equipovisitante) {
+    public void setEquipovisitante(String equipovisitante) {
         this.equipovisitante = equipovisitante;
     }
     public int getResultado() {
