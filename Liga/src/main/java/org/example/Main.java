@@ -1,16 +1,15 @@
 package org.example;
-import com.github.javafaker.*;
 
+import com.github.javafaker.*;
 import java.util.Locale;
 
 public class Main
 {
 	public static void main(String[] args)
 	{
-
 		Faker fakerEs = new Faker(new Locale("es"));
 		Faker fakerEn = new Faker(Locale.ENGLISH);
-		Faker fakerCh = new Faker(new Locale("hi", "IN"));
+		Faker fakerCh = new Faker(Locale.JAPAN);
 		Faker fakerAF = new Faker(new Locale("en", "NG"));
 
 
@@ -21,17 +20,17 @@ public class Main
 
 		firstName = fakerEn.name().firstName();
 		lastName = fakerEn.name().lastName();
-		
+
 		System.out.println("Nombre Ingles: "+ firstName + " " + lastName);
 
 		firstName = fakerCh.name().firstName();
 		lastName = fakerCh.name().lastName();
-		
-		System.out.println("Nombre Indio: "+ firstName + " " + lastName);
+
+		System.out.println("Nombre Japon: "+ firstName + " " + lastName);
 
 		firstName = fakerAF.name().firstName();
 		lastName = fakerAF.name().lastName();
-		
+
 		System.out.println("Nombre Africano: "+ firstName + " " + lastName);
 	}
 }
