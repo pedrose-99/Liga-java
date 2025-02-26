@@ -1,13 +1,9 @@
 package org.example.Liga;
 
-import java.util.Locale;
-import java.util.Random;
-
-import com.github.javafaker.Faker;
-
 public class Jugador extends Persona
 {
     private int goles;
+    private int asistencias;
     private Posicion posicion;
     private int tarjetasAmarillas;
     private int tarjetasRojas;
@@ -23,6 +19,7 @@ public class Jugador extends Persona
         this.tarjetasRojas = 0;
         this.stats = stats;
         this.posicion = posicion;
+        this.asistencias=0;
     }
 
     public Jugador(String nombre, String apellido, Continente continente, int goles, Posicion posicion, int tarjetasAmarillas, int tarjetasRojas, int stats) 
@@ -83,6 +80,15 @@ public class Jugador extends Persona
     public void setStats(int stats) 
     {
         this.stats = stats;
+    }
+
+    public void golNuevo()
+    {
+        this.goles ++;
+    }
+    public void asistencia()
+    {
+        this.asistencias ++;
     }
 
     @Override

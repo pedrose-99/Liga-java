@@ -1,10 +1,6 @@
 package org.example.Liga;
 
 import java.util.Arrays;
-import java.util.Locale;
-import java.util.Random;
-
-import com.github.javafaker.Faker;
 
 public class Equipo 
 {
@@ -37,6 +33,17 @@ public class Equipo
         this.mediaStats = 0;
         this.puntos = puntos;
         this.partidos = partidos;
+    }
+    
+    public void marcarGoles(int jugadorMarca)
+    {
+        System.out.println(this.jugadores[jugadorMarca].getNombre() + " marca un gol");
+        this.jugadores[jugadorMarca].golNuevo();
+    }
+    public void darAsistencia (int jugadorAsiste)
+    {
+        System.out.println(this.jugadores[jugadorAsiste].getNombre() + " ha dado la asistencia para el gol");
+        this.jugadores[jugadorAsiste].asistencia();
     }
 
     public String getNombre() 
