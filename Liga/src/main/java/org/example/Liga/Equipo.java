@@ -1,6 +1,10 @@
 package org.example.Liga;
 
 import java.util.Arrays;
+import java.util.Locale;
+import java.util.Random;
+
+import com.github.javafaker.Faker;
 
 public class Equipo 
 {
@@ -150,7 +154,5 @@ public class Equipo
             return false;
         return true;
     }
-
-    
     
 }

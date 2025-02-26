@@ -10,6 +10,11 @@ public class Partido
     private int[] resultado;
     private int numeroGoles;
 
+    public Partido(Equipo equipoLocal, Equipo equipoVisitante)
+    {
+        this.equipoLocal = equipoLocal;
+        this.equipoVisitante = equipoVisitante;
+    }
     
     public Partido(Equipo equipoLocal, Equipo equipoVisitante, int[] resultado, int numeroGoles) 
     {

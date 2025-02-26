@@ -1,5 +1,10 @@
 package org.example.Liga;
 
+import java.util.Locale;
+import java.util.Random;
+
+import com.github.javafaker.Faker;
+
 public class Jugador extends Persona
 {
     private int goles;
@@ -7,6 +12,8 @@ public class Jugador extends Persona
     private int tarjetasAmarillas;
     private int tarjetasRojas;
     private int stats;
+//Crear portero que va a ser una clase heredada de jugador con un nuevo aributo de numero de parads. Meter paradas++ en partido.
+
 
     public Jugador(String nombre, String apellido, Continente continente, int stats, Posicion posicion)
     {
@@ -105,8 +112,5 @@ public class Jugador extends Persona
             return false;
         return true;
     }
-
-    
-
     
 }

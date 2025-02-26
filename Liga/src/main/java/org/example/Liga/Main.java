@@ -8,16 +8,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.Collections;
 
 public class Main
 {
+
 	public static Jugador crearJugador(Posicion posicion)
 	{
 		Random ran = new Random();
 		String firstName;
 		String lastName;
 		int media;
-		Faker fakerEs = new Faker(new Locale("es"));
+		Faker fakerEs = new Faker(new Locale("es")); //REDUCIR ESTOS 6
 		Faker fakerEn = new Faker(Locale.ENGLISH);
 		Faker fakerAs = new Faker(Locale.JAPAN);
 		Faker fakerAF = new Faker(new Locale("en", "NG"));
@@ -42,14 +44,12 @@ public class Main
 				continente = Continente.ASIA;
 				break;			
 			case 3:
-			//HACER JAVAFAKER FRANCES
 				firstName = fakerCN.name().firstName();
 				lastName = fakerCN.name().lastName();
 				dado1 = ran.nextInt(99);
 				continente = Continente.NORTEAMERICA;
 				break;
 			case 4:
-			//HAcer JAVAFAKER SUDAMERICA
 				firstName = fakerBR.name().firstName();
 				lastName = fakerBR.name().lastName();
 				dado1 = ran.nextInt(99);
@@ -78,7 +78,7 @@ public class Main
 	{
 		int i;
 		Equipo equipoPrueba;
-		Jugador[] jugadores = new Jugador[25];
+		Jugador[] jugadores = new Jugador[11];
 
 		i = 0;
 		jugadores[i] = crearJugador(Posicion.PORTERO);
@@ -88,12 +88,12 @@ public class Main
 			jugadores[i] = crearJugador(Posicion.DEFENSA);
 			i++;
 		}
-		while (i <= 18)
+		while (i <= 7)
 		{
 			jugadores[i] = crearJugador(Posicion.MEDIOCAMPISTA);
 			i++;
 		}
-		while (i <= 24)
+		while (i <= 10)
 		{
 			jugadores[i] = crearJugador(Posicion.DELANTERO);
 			i++;
@@ -104,15 +104,14 @@ public class Main
 		return (equipoPrueba);
 	}
 
-	public static Equipo[] crearLiga()
+	public static List<Equipo>  crearLiga()
 	{
 		Equipo[] arrayEquipos = new Equipo[20];
 		int i;
-
 		i = 0;
         String[] equipos = {
-            "Real Madrid",
             "Barcelona",
+            "Real Madrid",
             "Atlético de Madrid",
             "Sevilla",
             "Valencia",
@@ -132,33 +131,64 @@ public class Main
             "Mallorca",
             "Rayo Vallecano"
         };
+
 		for (String equipo: equipos)
 		{
 			arrayEquipos[i] = crearEquipo(equipo);
 			i++;
 		}
-		return arrayEquipos;
+		List<Equipo> liga = new ArrayList<>(Arrays.asList(arrayEquipos));
+		return liga;
 	}
 
 	public static void generarCalendario()
 	{
-		Equipo[] liga = crearLiga();
+		List<Equipo> equipos = crearLiga();
+		Partido partido;
+		ArrayList<Jornada> jornadas = new ArrayList<>();
+		Jornada jornada;
+		int numJornada;
 
-		List<Equipo> ligaCopia = new ArrayList<>(Arrays.asList(liga));
-		for (int j = 0; j < (ligaCopia.size() - 1); j++)
+		Collections.shuffle(equipos);
+		numJornada = 1;
+		for (int z = 0; z < 2; z++)
 		{
-			for (int i = 0; i < (ligaCopia.size()/2); i++)
+			for (int j = 0; j < (equipos.size() - 1); j++)
 			{
-				
+				jornada = new Jornada(numJornada);
+				for (int i = 0; i < (equipos.size()/2); i++)
+				{
+					if (z == 0)
+					{
+						partido = new Partido(equipos.get(i), equipos.get(equipos.size() - 1 - i));
+					}
+					else
+					{
+						partido = new Partido(equipos.get(equipos.size() - 1 - i), equipos.get(i));
+					}
+					jornada.aniadirPartido(partido);
+				}
+				jornadas.add(jornada);
+				numJornada++;
+				Collections.rotate(equipos.subList(1, 20), 1);
 			}
 		}
-			Collections.rotate(ligaCopia.subList(1, 20), 1);
 
+		//PRINT JORNADAS.
+		for (Jornada jornadaPrueba : jornadas)
+		{
+			System.out.println("--------------------------------------------------------------");
+			System.out.println("JORNADA " + jornadaPrueba.getNumJornada());
+			for (Partido partidoPrueba : jornadaPrueba.getPartidos())
+			{
+				System.out.println(partidoPrueba.getEquipoLocal().getNombre() + " vs " + partidoPrueba.getEquipoVisitante().getNombre());
+			}
+			System.out.println("--------------------------------------------------------------");
+		}
 	}
 
 	public static void main(String[] args)
 	{
-		
 		generarCalendario();
 	}
 }
