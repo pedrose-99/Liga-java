@@ -112,7 +112,6 @@ public class Equipo
         return media;
     }
 
-
     @Override
     public String toString() {
         return "Equipo [nombre=" + nombre + ", jugadores=" + Arrays.toString(jugadores) + ", golesAfavor=" + golesAfavor
@@ -149,8 +148,5 @@ public class Equipo
         if (!Arrays.equals(partidos, other.partidos))
             return false;
         return true;
-    }
-
-    
-    
+    }    
 }
