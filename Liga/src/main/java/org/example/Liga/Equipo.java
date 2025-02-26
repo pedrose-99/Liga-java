@@ -13,7 +13,16 @@ public class Equipo
     private int puntos;
     private Partido[] partidos;
 
-    
+    public Equipo(String nombre, Jugador[] jugadores)
+    {
+        this.nombre = nombre;
+        this.jugadores = jugadores;
+        this.mediaStats = 0;
+        this.golesAfavor = 0;
+        this.golesEnContra = 0;
+        this.puntos = 0;
+    }
+
     public Equipo(String nombre, Jugador[] jugadores, int golesAfavor, int golesEnContra, int diferenciaGoles, int mediaStats, int puntos, Partido[] partidos) 
     {
         this.nombre = nombre;
@@ -98,7 +107,7 @@ public class Equipo
         {
             media = media + jugadorprueba.getStats();
         }
-        media = media/3;
+        media = media/this.jugadores.length;
         System.out.println("la media es : " + media);
         this.mediaStats = media;
         return media;

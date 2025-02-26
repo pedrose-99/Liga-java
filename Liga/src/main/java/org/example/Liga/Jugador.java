@@ -8,13 +8,14 @@ public class Jugador extends Persona
     private int tarjetasRojas;
     private int stats;
 
-    public Jugador(String nombre, String apellido, Continente continente, int stats)
+    public Jugador(String nombre, String apellido, Continente continente, int stats, Posicion posicion)
     {
         super(nombre, apellido, continente);
         this.goles = 0;
         this.tarjetasAmarillas = 0;
         this.tarjetasRojas = 0;
         this.stats = stats;
+        this.posicion = posicion;
     }
 
     public Jugador(String nombre, String apellido, Continente continente, int goles, Posicion posicion, int tarjetasAmarillas, int tarjetasRojas, int stats) 
@@ -77,12 +78,10 @@ public class Jugador extends Persona
         this.stats = stats;
     }
 
-
-
     @Override
     public String toString() {
         return "Jugador [nombre= " + super.getNombre() + " apellido= " + super.getApellido() + " continente= " + super.getContinente() +" goles=" + goles + ", posicion=" + posicion + ", tarjetasAmarillas=" + tarjetasAmarillas
-                + ", tarjetasRojas=" + tarjetasRojas + ", stats=" + stats + "]";
+                + ", tarjetasRojas=" + tarjetasRojas + ", stats=" + stats + "] \n";
     }
 
     @Override

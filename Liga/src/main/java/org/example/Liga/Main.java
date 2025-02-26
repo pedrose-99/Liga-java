@@ -4,10 +4,9 @@ import com.github.javafaker.*;
 import java.util.Locale;
 import java.util.Random;
 
-
 public class Main
 {
-	public static Jugador crearJugador()
+	public static Jugador crearJugador(Posicion posicion)
 	{
 		Random ran = new Random();
 		String firstName;
@@ -17,6 +16,8 @@ public class Main
 		Faker fakerEn = new Faker(Locale.ENGLISH);
 		Faker fakerAs = new Faker(Locale.JAPAN);
 		Faker fakerAF = new Faker(new Locale("en", "NG"));
+		Faker fakerCN = new Faker(Locale.CANADA_FRENCH);
+		Faker fakerBR = new Faker(new Locale("pt-BR"));
 		int dado1;
 		Jugador jugador;
 		Continente continente;
@@ -37,15 +38,15 @@ public class Main
 				break;			
 			case 3:
 			//HACER JAVAFAKER FRANCES
-				firstName = fakerEs.name().firstName();
-				lastName = fakerEs.name().lastName();
+				firstName = fakerCN.name().firstName();
+				lastName = fakerCN.name().lastName();
 				dado1 = ran.nextInt(99);
 				continente = Continente.NORTEAMERICA;
 				break;
 			case 4:
 			//HAcer JAVAFAKER SUDAMERICA
-				firstName = fakerEs.name().firstName();
-				lastName = fakerEs.name().lastName();
+				firstName = fakerBR.name().firstName();
+				lastName = fakerBR.name().lastName();
 				dado1 = ran.nextInt(99);
 				continente = Continente.SUDAMERICA;
 				break;
@@ -64,43 +65,89 @@ public class Main
 				continente = Continente.OCEANIA;
 				break;
 		}
-		jugador = new Jugador(firstName, lastName, continente, dado1);
+		jugador = new Jugador(firstName, lastName, continente, dado1, posicion);
 		return jugador;
 	}
 
-	public static void crearEquipo()
+	public static Equipo crearEquipo(String nombre)
 	{
+		int i;
+		Equipo equipoPrueba;
+		Jugador[] jugadores = new Jugador[25];
 
+		i = 0;
+		while (i <= 2)
+		{
+			jugadores[i] = crearJugador(Posicion.PORTERO);
+			i++;
+		}
+		while (i <= 11)
+		{
+			jugadores[i] = crearJugador(Posicion.DEFENSA);
+			i++;
+		}
+		while (i <= 18)
+		{
+			jugadores[i] = crearJugador(Posicion.MEDIOCAMPISTA);
+			i++;
+		}
+		while (i <= 24)
+		{
+			jugadores[i] = crearJugador(Posicion.DELANTERO);
+			i++;
+		}
+		equipoPrueba = new Equipo(nombre, jugadores);
+		equipoPrueba.calcularMediaEquipo();
+
+		return (equipoPrueba);
+	}
+
+	public static Equipo[] crearLiga()
+	{
+		Equipo[] arrayEquipos = new Equipo[25];
+		int i;
+
+		i = 0;
+        String[] equipos = {
+            "Real Madrid",
+            "Barcelona",
+            "Atlético de Madrid",
+            "Sevilla",
+            "Valencia",
+            "Villarreal",
+            "Real Sociedad",
+            "Betis",
+            "Athletic Bilbao",
+            "Getafe",
+            "Espanyol",
+            "Osasuna",
+            "Alavés",
+            "Levante",
+            "Celta de Vigo",
+            "Granada",
+            "Cadiz",
+            "Elche",
+            "Mallorca",
+            "Rayo Vallecano"
+        };
+		for (String equipo: equipos)
+		{
+			arrayEquipos[i] = crearEquipo(equipo);
+			i++;
+		}
+		return arrayEquipos;
+	}
+
+	public static void generarCalendario()
+	{
+		Equipo[] equipo = crearLiga();
+		
 	}
 
 	public static void main(String[] args)
 	{
-		Faker fakerEs = new Faker(new Locale("es"));
-		Faker fakerEn = new Faker(Locale.ENGLISH);
-		Faker fakerCh = new Faker(Locale.JAPAN);
-		Faker fakerAF = new Faker(new Locale("en", "NG"));
-
-
-		String firstName = fakerEs.name().firstName();
-		String lastName = fakerEs.name().lastName();
-
-		System.out.println("Nombre español: "+ firstName + " " + lastName);
-
-		firstName = fakerEn.name().firstName();
-		lastName = fakerEn.name().lastName();
-
-		System.out.println("Nombre Ingles: "+ firstName + " " + lastName);
-
-		firstName = fakerCh.name().firstName();
-		lastName = fakerCh.name().lastName();
-
-		System.out.println("Nombre Japon: "+ firstName + " " + lastName);
-
-		firstName = fakerAF.name().firstName();
-		lastName = fakerAF.name().lastName();
-
-		System.out.println("Nombre Africano: "+ firstName + " " + lastName);
-		Jugador jugadorPrueba = crearJugador();
-		System.out.println("EL jugador es: " + jugadorPrueba);
+		
+		Equipo equipoPrueba = crearEquipo("Moco FC");
+		System.out.println("EL jugador es: " + equipoPrueba);
 	}
 }

@@ -44,7 +44,6 @@ public class Partido
         this.numeroGoles = numeroGoles;
     }
 
-
     public void simularPartido()
     {
         Random ran = new Random();
@@ -74,8 +73,6 @@ public class Partido
         }
         System.out.println("Marcador: " +this.equipoLocal.getNombre() + " " +golesEquipo1+ " - " + golesEquipo2+ " " +this.equipoVisitante.getNombre());
         
-
-    
         
     }
 
