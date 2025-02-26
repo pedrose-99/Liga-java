@@ -1,6 +1,11 @@
 package org.example.Liga;
 
 import com.github.javafaker.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -76,12 +81,9 @@ public class Main
 		Jugador[] jugadores = new Jugador[25];
 
 		i = 0;
-		while (i <= 2)
-		{
-			jugadores[i] = crearJugador(Posicion.PORTERO);
-			i++;
-		}
-		while (i <= 11)
+		jugadores[i] = crearJugador(Posicion.PORTERO);
+		i++;
+		while (i <= 4)
 		{
 			jugadores[i] = crearJugador(Posicion.DEFENSA);
 			i++;
@@ -104,7 +106,7 @@ public class Main
 
 	public static Equipo[] crearLiga()
 	{
-		Equipo[] arrayEquipos = new Equipo[25];
+		Equipo[] arrayEquipos = new Equipo[20];
 		int i;
 
 		i = 0;
@@ -140,14 +142,23 @@ public class Main
 
 	public static void generarCalendario()
 	{
-		Equipo[] equipo = crearLiga();
-		
+		Equipo[] liga = crearLiga();
+
+		List<Equipo> ligaCopia = new ArrayList<>(Arrays.asList(liga));
+		for (int j = 0; j < (ligaCopia.size() - 1); j++)
+		{
+			for (int i = 0; i < (ligaCopia.size()/2); i++)
+			{
+				
+			}
+		}
+			Collections.rotate(ligaCopia.subList(1, 20), 1);
+
 	}
 
 	public static void main(String[] args)
 	{
 		
-		Equipo equipoPrueba = crearEquipo("Moco FC");
-		System.out.println("EL jugador es: " + equipoPrueba);
+		generarCalendario();
 	}
 }

@@ -108,7 +108,6 @@ public class Equipo
             media = media + jugadorprueba.getStats();
         }
         media = media/this.jugadores.length;
-        System.out.println("la media es : " + media);
         this.mediaStats = media;
         return media;
     }
