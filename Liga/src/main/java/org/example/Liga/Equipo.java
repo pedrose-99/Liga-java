@@ -34,6 +34,17 @@ public class Equipo
         this.puntos = puntos;
         this.partidos = partidos;
     }
+    
+    public void marcarGoles(int jugadorMarca)
+    {
+        System.out.println(this.jugadores[jugadorMarca].getNombre() + " marca un gol");
+        this.jugadores[jugadorMarca].golNuevo();
+    }
+    public void darAsistencia (int jugadorAsiste)
+    {
+        System.out.println(this.jugadores[jugadorAsiste].getNombre() + " ha dado la asistencia para el gol");
+        this.jugadores[jugadorAsiste].asistencia();
+    }
 
     public String getNombre() 
     {
@@ -148,5 +159,10 @@ public class Equipo
         if (!Arrays.equals(partidos, other.partidos))
             return false;
         return true;
+<<<<<<< HEAD
     }    
+=======
+    }
+    
+>>>>>>> 1ea1394f536fbcb02c26b69ecc5441eebaf2631b
 }

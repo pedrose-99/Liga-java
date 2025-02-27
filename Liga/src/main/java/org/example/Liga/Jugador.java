@@ -3,10 +3,13 @@ package org.example.Liga;
 public class Jugador extends Persona
 {
     private int goles;
+    private int asistencias;
     private Posicion posicion;
     private int tarjetasAmarillas;
     private int tarjetasRojas;
     private int stats;
+//Crear portero que va a ser una clase heredada de jugador con un nuevo aributo de numero de parads. Meter paradas++ en partido.
+
 
     public Jugador(String nombre, String apellido, Continente continente, int stats, Posicion posicion)
     {
@@ -16,6 +19,7 @@ public class Jugador extends Persona
         this.tarjetasRojas = 0;
         this.stats = stats;
         this.posicion = posicion;
+        this.asistencias=0;
     }
 
     public Jugador(String nombre, String apellido, Continente continente, int goles, Posicion posicion, int tarjetasAmarillas, int tarjetasRojas, int stats) 
@@ -78,6 +82,15 @@ public class Jugador extends Persona
         this.stats = stats;
     }
 
+    public void golNuevo()
+    {
+        this.goles ++;
+    }
+    public void asistencia()
+    {
+        this.asistencias ++;
+    }
+
     @Override
     public String toString() {
         return "Jugador [nombre= " + super.getNombre() + " apellido= " + super.getApellido() + " continente= " + super.getContinente() +" goles=" + goles + ", posicion=" + posicion + ", tarjetasAmarillas=" + tarjetasAmarillas
@@ -105,8 +118,5 @@ public class Jugador extends Persona
             return false;
         return true;
     }
-
-    
-
     
 }
