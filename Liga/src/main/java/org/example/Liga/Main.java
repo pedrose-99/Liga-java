@@ -141,6 +141,19 @@ public class Main
 		return liga;
 	}
 
+	public static void imprimirJornadas(ArrayList<Jornada> jornadas)
+	{
+		for (Jornada jornadaPrueba : jornadas)
+		{
+			System.out.println("--------------------------------------------------------------");
+			System.out.println("JORNADA " + jornadaPrueba.getNumJornada());
+			for (Partido partidoPrueba : jornadaPrueba.getPartidos())
+			{
+				System.out.println(partidoPrueba.getEquipoLocal().getNombre() + " vs " + partidoPrueba.getEquipoVisitante().getNombre());
+			}
+			System.out.println("--------------------------------------------------------------");
+		}
+	}
 	public static void generarCalendario()
 	{
 		List<Equipo> equipos = crearLiga();
@@ -173,18 +186,7 @@ public class Main
 				Collections.rotate(equipos.subList(1, 20), 1);
 			}
 		}
-
-		//PRINT JORNADAS.
-		for (Jornada jornadaPrueba : jornadas)
-		{
-			System.out.println("--------------------------------------------------------------");
-			System.out.println("JORNADA " + jornadaPrueba.getNumJornada());
-			for (Partido partidoPrueba : jornadaPrueba.getPartidos())
-			{
-				System.out.println(partidoPrueba.getEquipoLocal().getNombre() + " vs " + partidoPrueba.getEquipoVisitante().getNombre());
-			}
-			System.out.println("--------------------------------------------------------------");
-		}
+		imprimirJornadas(jornadas);
 	}
 
 	public static void main(String[] args)
