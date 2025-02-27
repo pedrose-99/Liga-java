@@ -191,6 +191,13 @@ public class Main
 
 	public static void main(String[] args)
 	{
-		generarCalendario();
+		//generarCalendario();
+		Equipo Atleti = crearEquipo("Atleti");
+		Equipo Barcelona = crearEquipo("Barcelona");
+		Partido partido = new Partido(Atleti, Barcelona);
+		partido.simularPartido();
 	}
+
+
+
 }

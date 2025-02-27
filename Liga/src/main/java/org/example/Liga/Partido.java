@@ -67,37 +67,37 @@ public class Partido
                 dado1 = ran.nextInt(10);
                 dado2 = ran.nextInt(10);
                 dado3 = ran.nextInt(10);
-                if(dado1 <= 6)
+                if(dado1 <= 7)
                 {
                     golesEquipo1 ++;
-                    minutoActual += ran.nextInt(1, 10) + (minutoActual / 10) * 10;
+                    minutoActual += ran.nextInt(1, 17);
                     System.out.println("El " +this.equipoLocal.getNombre()+ " ha metido gol en el minuto: " + minutoActual);
-                    marcarGol = ran.nextInt(3,24);
+                    marcarGol = ran.nextInt(1,10);
                     this.equipoLocal.marcarGoles(marcarGol);
                     
                         if (dado3 <=7)
                         {
                             do
                             {
-                                darAsistencia = ran.nextInt(0,24);
+                                darAsistencia = ran.nextInt(0,10);
                             }
                             while(darAsistencia == marcarGol);
                             this.equipoLocal.darAsistencia(darAsistencia);
                         }
                 }
-                if(dado2 <= 4)
+                if(dado2 <= 3)
                 {
                     golesEquipo2 ++;
-                    minutoActual += ran.nextInt(1, 10) + (minutoActual / 10) * 10;
+                    minutoActual += ran.nextInt(1, 17);
                     System.out.println("El " +this.equipoVisitante.getNombre()+ " ha metido gol en el minuto: " + minutoActual );
-                    marcarGol = ran.nextInt(3,24);
+                    marcarGol = ran.nextInt(1,10);
                     this.equipoVisitante.marcarGoles(marcarGol);
                           
                     if (dado3 <=7)
                     {
                         do
                         {
-                            darAsistencia = ran.nextInt(0,24);
+                            darAsistencia = ran.nextInt(0,10);
                         }
                         while(darAsistencia == marcarGol);
                         this.equipoLocal.darAsistencia(darAsistencia);

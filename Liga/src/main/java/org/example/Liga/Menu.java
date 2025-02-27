@@ -1,7 +1,7 @@
 package org.example.Liga;
 import java.util.Scanner;
 
-public class Menú 
+public class Menu 
 
 {
     public void funcionVerLigas()
