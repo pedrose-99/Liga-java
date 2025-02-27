@@ -1,6 +1,10 @@
 package org.example.Liga;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class Partido 
@@ -36,110 +40,159 @@ public class Partido
     public void setEquipoVisitante(Equipo equipoVisitante) {
         this.equipoVisitante = equipoVisitante;
     }
-    public int[] getResultado() {
+    public int[] getResultado() 
+    {
         return resultado;
     }
-    public void setResultado(int[] resultado) {
+    public void setResultado(int[] resultado) 
+    {
         this.resultado = resultado;
     }
-    public int getNumeroGoles() {
+    public int getNumeroGoles() 
+    {
         return numeroGoles;
     }
-    public void setNumeroGoles(int numeroGoles) {
+    public void setNumeroGoles(int numeroGoles) 
+    {
         this.numeroGoles = numeroGoles;
     }
 
-    public void simularPartido()
+public void simularPartido() 
+{
+    Random ran = new Random();
+    int golesEquipo1 = 0;
+    int golesEquipo2 = 0;
+    int minutoActual = 0;
+    int marcarGol;
+    int darAsistencia;
+    List<String> eventos = new ArrayList<>();
+    
+    
+    int[] tarjetasAmarillasLocal = new int[11];
+    int[] tarjetasRojasLocal = new int[11];
+    int[] tarjetasAmarillasVisitante = new int[11];
+    int[] tarjetasRojasVisitante = new int[11];
+    
+    for (int i = 0; i < 5; i++) 
     {
-        Random ran = new Random();
-        int golesEquipo1 = 0;
-        int golesEquipo2 = 0;
-        int dado1;
-        int dado2;
-        int dado3;
-        int marcarGol;
-        int darAsistencia;
-        int minutoActual = 0;
-        for(int i = 0 ; i < 5; i++)
+        if (this.equipoLocal.getMediaStats() > this.equipoVisitante.getMediaStats()) 
         {
-            if(this.equipoLocal.getMediaStats() > this.equipoVisitante.getMediaStats())
+            int dado1 = ran.nextInt(10);
+            int dado2 = ran.nextInt(10);
+            int dado3 = ran.nextInt(10);
+            
+            if (dado1 <= 7 && minutoActual < 90) 
             {
-                dado1 = ran.nextInt(10);
-                dado2 = ran.nextInt(10);
-                dado3 = ran.nextInt(10);
-                if(dado1 <= 7)
+                minutoActual += ran.nextInt(1, 17);
+                if (minutoActual > 90) break;
+                
+                golesEquipo1++;
+                marcarGol = ran.nextInt(1, 11);
+                eventos.add(minutoActual + ": Gol del " + this.equipoLocal.getNombre() + " (Jugador " + marcarGol + ")");
+                
+                if (dado3 <= 7) 
                 {
-                    golesEquipo1 ++;
-                    minutoActual += ran.nextInt(1, 17);
-                    System.out.println("El " +this.equipoLocal.getNombre()+ " ha metido gol en el minuto: " + minutoActual);
-                    marcarGol = ran.nextInt(1,10);
-                    this.equipoLocal.marcarGoles(marcarGol);
-                    
-                        if (dado3 <=7)
-                        {
-                            do
-                            {
-                                darAsistencia = ran.nextInt(0,10);
-                            }
-                            while(darAsistencia == marcarGol);
-                            this.equipoLocal.darAsistencia(darAsistencia);
-                        }
-                }
-                if(dado2 <= 3)
-                {
-                    golesEquipo2 ++;
-                    minutoActual += ran.nextInt(1, 17);
-                    System.out.println("El " +this.equipoVisitante.getNombre()+ " ha metido gol en el minuto: " + minutoActual );
-                    marcarGol = ran.nextInt(1,10);
-                    this.equipoVisitante.marcarGoles(marcarGol);
-                          
-                    if (dado3 <=7)
+                    do 
                     {
-                        do
-                        {
-                            darAsistencia = ran.nextInt(0,10);
-                        }
-                        while(darAsistencia == marcarGol);
-                        this.equipoLocal.darAsistencia(darAsistencia);
+                        darAsistencia = ran.nextInt(0, 11);
+                    } 
+                    while (darAsistencia == marcarGol);
+                    eventos.add(minutoActual + ": Asistencia del " + this.equipoLocal.getNombre() + " (Jugador " + darAsistencia + ")");
+                }
+            }
+            
+            if (dado2 <= 3 && minutoActual < 90) 
+            {
+                minutoActual += ran.nextInt(1, 17);
+                if (minutoActual > 90) break;
+                golesEquipo2++;
+                marcarGol = ran.nextInt(1, 11);
+                eventos.add(minutoActual + ": Gol del " + this.equipoVisitante.getNombre() + " (Jugador " + marcarGol + ")");
+                
+                if (dado3 <= 7)
+                {
+                    do 
+                    {
+                        darAsistencia = ran.nextInt(0, 11);
+                    } 
+                    while (darAsistencia == marcarGol);
+                    eventos.add(minutoActual + ": Asistencia del " + this.equipoVisitante.getNombre() + " (Jugador " + darAsistencia + ")");
+                }
+            }
+        }
+        
+    
+        if (ran.nextInt(10) < 3 && minutoActual < 90) 
+        {
+            int jugador = ran.nextInt(0, 11);
+            boolean esLocal = ran.nextBoolean();
+            
+            int minutoTarjeta = minutoActual + ran.nextInt(1, 5); 
+            if (minutoTarjeta > 90) minutoTarjeta = 90;
+            
+            if (esLocal) {
+                if (tarjetasRojasLocal[jugador] == 0) 
+                {
+                    tarjetasAmarillasLocal[jugador]++;
+                    eventos.add(minutoTarjeta + ": Tarjeta amarilla para " + this.equipoLocal.getNombre() + " (Jugador " + jugador + ")");
+                    if (tarjetasAmarillasLocal[jugador] == 2) 
+                    {
+                        tarjetasRojasLocal[jugador] = 1;
+                        eventos.add(minutoTarjeta + ": ¡Expulsión! Tarjeta roja para " + this.equipoLocal.getNombre() + " (Jugador " + jugador + ")");
+                    }
+                }
+            } 
+            else 
+            {
+                if (tarjetasRojasVisitante[jugador] == 0) 
+                {
+                    tarjetasAmarillasVisitante[jugador]++;
+                    eventos.add(minutoTarjeta + ": Tarjeta amarilla para " + this.equipoVisitante.getNombre() + " (Jugador " + jugador + ")");
+                    if (tarjetasAmarillasVisitante[jugador] == 2) 
+                    {
+                        tarjetasRojasVisitante[jugador] = 1;
+                        eventos.add(minutoTarjeta + ": ¡Expulsión! Tarjeta roja para " + this.equipoVisitante.getNombre() + " (Jugador " + jugador + ")");
                     }
                 }
             }
         }
-        System.out.println("Marcador: " +this.equipoLocal.getNombre() + " " +golesEquipo1+ " - " + golesEquipo2+ " " +this.equipoVisitante.getNombre());
-        
-        
     }
+    
+    eventos.sort(Comparator.comparingInt(e -> Integer.parseInt(e.split(":")[0])));
+    
+    
+    for (String evento : eventos) 
+    {
+        System.out.println(evento);
+    }
+    
+    System.out.println("Marcador: " + this.equipoLocal.getNombre() + " " + golesEquipo1 + " - " + golesEquipo2 + " " + this.equipoVisitante.getNombre());
+    System.out.println("Jugadores amonestados:");
+    for (int i = 0; i < 11; i++) 
+    {
+        if (tarjetasAmarillasLocal[i] > 0 || tarjetasRojasLocal[i] > 0) 
+        {
+            System.out.println("Jugador " + i + " del " + this.equipoLocal.getNombre() + " - Amarillas: " + tarjetasAmarillasLocal[i] + " | Rojas: " + tarjetasRojasLocal[i]);
+        }
+        if (tarjetasAmarillasVisitante[i] > 0 || tarjetasRojasVisitante[i] > 0) 
+        {
+            System.out.println("Jugador " + i + " del " + this.equipoVisitante.getNombre() + " - Amarillas: " + tarjetasAmarillasVisitante[i] + " | Rojas: " + tarjetasRojasVisitante[i]);
+        }
+    }
+}
+@Override
+public boolean equals(Object obj) 
+{
+    if (this == obj) return true;
+    if (obj == null || getClass() != obj.getClass()) return false;
+    
+    Partido other = (Partido) obj;
+    
+    return Objects.equals(equipoLocal, other.equipoLocal) &&
+           Objects.equals(equipoVisitante, other.equipoVisitante) &&
+           Arrays.equals(resultado, other.resultado) &&
+           numeroGoles == other.numeroGoles;
+}
 
-    @Override
-    public String toString() {
-        return "Partido [equipoLocal= " + equipoLocal + ", equipoVisitante= " + equipoVisitante + ", resultado= "
-                + Arrays.toString(resultado) + ", numeroGoles= " + numeroGoles + "]";
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Partido other = (Partido) obj;
-        if (equipoLocal == null) {
-            if (other.equipoLocal != null)
-                return false;
-        } else if (!equipoLocal.equals(other.equipoLocal))
-            return false;
-        if (equipoVisitante == null) {
-            if (other.equipoVisitante != null)
-                return false;
-        } else if (!equipoVisitante.equals(other.equipoVisitante))
-            return false;
-        if (!Arrays.equals(resultado, other.resultado))
-            return false;
-        if (numeroGoles != other.numeroGoles)
-            return false;
-        return true;
-    }
 
 }
