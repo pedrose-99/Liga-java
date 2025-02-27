@@ -159,10 +159,5 @@ public class Equipo
         if (!Arrays.equals(partidos, other.partidos))
             return false;
         return true;
-<<<<<<< HEAD
     }    
-=======
-    }
-    
->>>>>>> 1ea1394f536fbcb02c26b69ecc5441eebaf2631b
 }
