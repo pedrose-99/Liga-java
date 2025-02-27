@@ -155,6 +155,8 @@ public class Main
 		{
 			for (int j = 0; j < (equipos.size() - 1); j++)
 			{
+				jornada = new Jornada(numJornada);
+				for (int i = 0; i < (equipos.size()/2); i++)
 				{
 					if (z == 0)
 					{
