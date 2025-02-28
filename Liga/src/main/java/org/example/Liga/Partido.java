@@ -179,6 +179,20 @@ public void simularPartido()
             System.out.println("Jugador " + i + " del " + this.equipoVisitante.getNombre() + " - Amarillas: " + tarjetasAmarillasVisitante[i] + " | Rojas: " + tarjetasRojasVisitante[i]);
         }
     }
+    if (golesEquipo1 > golesEquipo2)
+    {
+        this.equipoLocal.setPuntos(this.equipoLocal.getPuntos() + 3);
+    }
+    else if (golesEquipo2 > golesEquipo1)
+    {
+        this.equipoVisitante.setPuntos(this.equipoVisitante.getPuntos() + 3);
+    }
+    else
+    {
+        this.equipoLocal.setPuntos(this.equipoLocal.getPuntos() + 1);
+        this.equipoVisitante.setPuntos(this.equipoVisitante.getPuntos() + 1);
+    }
+    
 }
 @Override
 public boolean equals(Object obj) 

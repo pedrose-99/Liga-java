@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Menu 
 
 {
-    public void funcionVerLigas()
+    public void funcionVerLiga()
     {
         Scanner teclado = new Scanner(System.in);
         int opcion;
@@ -13,24 +13,18 @@ public class Menu
         switch (opcion) 
         {
             case 1:
-                
+                System.out.println();
                 break;
             case 2:
-
+                verNombresEquipos();
                 break;
-            case 3:
-
-                break;
-            case 4:
-
-                break;
-            case 5:
-            
-                break;
-        
             default:
                 break;
         }
+    }
+    public void verNombresEquipos()
+    {
+
     }
 
     public void BienvenidoAlSimulador()
@@ -57,7 +51,7 @@ public class Menu
             {
                 case 1:
                     //Ver ligas
-                    funcionVerLigas();
+                    funcionVerLiga();
                     break;
                 case 2:
                     //Salir
