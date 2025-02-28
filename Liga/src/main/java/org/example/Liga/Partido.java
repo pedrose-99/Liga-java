@@ -57,142 +57,143 @@ public class Partido
         this.numeroGoles = numeroGoles;
     }
 
-    public void simularPartido()
-    {
+    public void simularPartido() {
         Random ran = new Random();
         int golesEquipo1 = 0;
         int golesEquipo2 = 0;
         int minutoActual = 0;
-        int marcarGol;
-        int darAsistencia;
         List<String> eventos = new ArrayList<>();
-        
         
         int[] tarjetasAmarillasLocal = new int[11];
         int[] tarjetasRojasLocal = new int[11];
         int[] tarjetasAmarillasVisitante = new int[11];
         int[] tarjetasRojasVisitante = new int[11];
         
-        for (int i = 0; i < 5; i++) 
-        {
-            if (this.equipoLocal.getMediaStats() > this.equipoVisitante.getMediaStats()) 
-            {
-                int dado1 = ran.nextInt(10);
-                int dado2 = ran.nextInt(10);
-                int dado3 = ran.nextInt(10);
-                
-                if (dado1 <= 7 && minutoActual < 90) 
-                {
-                    minutoActual += ran.nextInt(1, 17);
-                    if (minutoActual > 90) break;
-                    
-                    golesEquipo1++;
-                    marcarGol = ran.nextInt(1, 11);
-                    eventos.add(minutoActual + ": Gol del " + this.equipoLocal.getNombre() + " (Jugador " + marcarGol + ")");
-                    
-                    if (dado3 <= 7) 
-                    {
-                        do 
-                        {
-                            darAsistencia = ran.nextInt(0, 11);
-                        } 
-                        while (darAsistencia == marcarGol);
-                        eventos.add(minutoActual + ": Asistencia del " + this.equipoLocal.getNombre() + " (Jugador " + darAsistencia + ")");
-                    }
-                }
-                
-                if (dado2 <= 3 && minutoActual < 90) 
-                {
-                    minutoActual += ran.nextInt(1, 17);
-                    if (minutoActual > 90) break;
-                    golesEquipo2++;
-                    marcarGol = ran.nextInt(1, 11);
-                    eventos.add(minutoActual + ": Gol del " + this.equipoVisitante.getNombre() + " (Jugador " + marcarGol + ")");
-                    
-                    if (dado3 <= 7)
-                    {
-                        do 
-                        {
-                            darAsistencia = ran.nextInt(0, 11);
-                        } 
-                        while (darAsistencia == marcarGol);
-                        eventos.add(minutoActual + ": Asistencia del " + this.equipoVisitante.getNombre() + " (Jugador " + darAsistencia + ")");
-                    }
-                }
+        System.out.println("---------------------------------------------");
+        System.out.println("---------------------------------------------");
+        System.out.println("BIENVENIDOS AL PARTIDO ENTRE " + this.equipoLocal.getNombre() + " vs " + this.equipoVisitante.getNombre());
+        System.out.println("---------------------------------------------");
+        System.out.println("---------------------------------------------");
+        for (int i = 0; i < 5; i++) {
+            if (this.equipoLocal.getMediaStats() > this.equipoVisitante.getMediaStats()) {
+                golesEquipo1 = simularGolMayorMedia(minutoActual, golesEquipo1, this.equipoLocal, eventos, ran);
+                golesEquipo2 = simularGolMenorMedia(minutoActual, golesEquipo2, this.equipoVisitante, eventos, ran);
             }
+            else
+            {
+                golesEquipo2 = simularGolMayorMedia(minutoActual, golesEquipo2, this.equipoLocal, eventos, ran);
+                golesEquipo1 = simularGolMenorMedia(minutoActual, golesEquipo1, this.equipoVisitante, eventos, ran);
+            }
+            simularTarjetas(minutoActual, tarjetasAmarillasLocal, tarjetasRojasLocal, tarjetasAmarillasVisitante, tarjetasRojasVisitante, eventos, ran);
+        }
+        
+        mostrarEventos(eventos);
+        mostrarMarcador(golesEquipo1, golesEquipo2);
+        mostrarAmonestados(tarjetasAmarillasLocal, tarjetasRojasLocal, tarjetasAmarillasVisitante, tarjetasRojasVisitante);
+        actualizarPuntos(golesEquipo1, golesEquipo2);
+    }
+    
+    public int simularGolMayorMedia(int minutoActual, int golesEquipo, Equipo equipo, List<String> eventos, Random ran) {
+        int dado = ran.nextInt(10);
+        if (dado <= 7 && minutoActual < 90) {
+            minutoActual += ran.nextInt(1, 17);
+            if (minutoActual > 90) return minutoActual;
             
-        
-            if (ran.nextInt(10) < 3 && minutoActual < 90) 
-            {
-                int jugador = ran.nextInt(0, 11);
-                boolean esLocal = ran.nextBoolean();
-                
-                int minutoTarjeta = minutoActual + ran.nextInt(1, 5); 
-                if (minutoTarjeta > 90) minutoTarjeta = 90;
-                
-                if (esLocal) {
-                    if (tarjetasRojasLocal[jugador] == 0) 
-                    {
-                        tarjetasAmarillasLocal[jugador]++;
-                        eventos.add(minutoTarjeta + ": Tarjeta amarilla para " + this.equipoLocal.getNombre() + " (Jugador " + jugador + ")");
-                        if (tarjetasAmarillasLocal[jugador] == 2) 
-                        {
-                            tarjetasRojasLocal[jugador] = 1;
-                            eventos.add(minutoTarjeta + ": ¡Expulsión! Tarjeta roja para " + this.equipoLocal.getNombre() + " (Jugador " + jugador + ")");
-                        }
-                    }
-                } 
-                else 
-                {
-                    if (tarjetasRojasVisitante[jugador] == 0) 
-                    {
-                        tarjetasAmarillasVisitante[jugador]++;
-                        eventos.add(minutoTarjeta + ": Tarjeta amarilla para " + this.equipoVisitante.getNombre() + " (Jugador " + jugador + ")");
-                        if (tarjetasAmarillasVisitante[jugador] == 2) 
-                        {
-                            tarjetasRojasVisitante[jugador] = 1;
-                            eventos.add(minutoTarjeta + ": ¡Expulsión! Tarjeta roja para " + this.equipoVisitante.getNombre() + " (Jugador " + jugador + ")");
-                        }
-                    }
-                }
+            golesEquipo++;
+            int marcarGol = ran.nextInt(1, 11);
+            eventos.add(minutoActual + ": Gol del " + equipo.getNombre() + " (Jugador " + marcarGol + ")");
+            
+            if (ran.nextInt(10) <= 7) {
+                int darAsistencia;
+                do {
+                    darAsistencia = ran.nextInt(1, 11);
+                } while (darAsistencia == marcarGol);
+                eventos.add(minutoActual + ": Asistencia del " + equipo.getNombre() + " (Jugador " + darAsistencia + ")");
             }
         }
-        
-        eventos.sort(Comparator.comparingInt(e -> Integer.parseInt(e.split(":")[0])));
-        
-        
-        for (String evento : eventos) 
-        {
-            System.out.println(evento);
+        return golesEquipo;
+    }
+
+    public int simularGolMenorMedia(int minutoActual, int golesEquipo, Equipo equipo, List<String> eventos, Random ran) {
+        int dado = ran.nextInt(10);
+        if (dado <= 4 && minutoActual < 90) {
+            minutoActual += ran.nextInt(1, 17);
+            if (minutoActual > 90) return minutoActual;
+            
+            golesEquipo++;
+            int marcarGol = ran.nextInt(1, 11);
+            eventos.add(minutoActual + ": Gol del " + equipo.getNombre() + " (Jugador " + marcarGol + ")");
+            
+            if (ran.nextInt(10) <= 7) {
+                int darAsistencia;
+                do {
+                    darAsistencia = ran.nextInt(1, 11);
+                } while (darAsistencia == marcarGol);
+                eventos.add(minutoActual + ": Asistencia del " + equipo.getNombre() + " (Jugador " + darAsistencia + ")");
+            }
         }
-        
+        return golesEquipo;
+    }
+    
+    public void simularTarjetas(int minutoActual, int[] tarjetasAmarillasLocal, int[] tarjetasRojasLocal,
+                                 int[] tarjetasAmarillasVisitante, int[] tarjetasRojasVisitante,
+                                 List<String> eventos, Random ran) {
+        if (ran.nextInt(10) < 3 && minutoActual < 90) {
+            int jugador = ran.nextInt(0, 11);
+            boolean esLocal = ran.nextBoolean();
+            int minutoTarjeta = Math.min(minutoActual + ran.nextInt(1, 5), 90);
+            
+            if (esLocal) {
+                gestionarTarjeta(jugador, this.equipoLocal, tarjetasAmarillasLocal, tarjetasRojasLocal, minutoTarjeta, eventos);
+            } else {
+                gestionarTarjeta(jugador, this.equipoVisitante, tarjetasAmarillasVisitante, tarjetasRojasVisitante, minutoTarjeta, eventos);
+            }
+        }
+    }
+    
+    public void gestionarTarjeta(int jugador, Equipo equipo, int[] tarjetasAmarillas, int[] tarjetasRojas, int minutoTarjeta, List<String> eventos) {
+        if (tarjetasRojas[jugador] == 0) {
+            tarjetasAmarillas[jugador]++;
+            eventos.add(minutoTarjeta + ": Tarjeta amarilla para " + equipo.getNombre() + " (Jugador " + jugador + ")");
+            
+            if (tarjetasAmarillas[jugador] == 2) {
+                tarjetasRojas[jugador] = 1;
+                eventos.add(minutoTarjeta + ": ¡Expulsión! Tarjeta roja para " + equipo.getNombre() + " (Jugador " + jugador + ")");
+            }
+        }
+    }
+    
+    public void mostrarEventos(List<String> eventos) {
+        eventos.sort(Comparator.comparingInt(e -> Integer.parseInt(e.split(":")[0])));
+        eventos.forEach(System.out::println);
+    }
+    
+    public void mostrarMarcador(int golesEquipo1, int golesEquipo2) {
         System.out.println("Marcador: " + this.equipoLocal.getNombre() + " " + golesEquipo1 + " - " + golesEquipo2 + " " + this.equipoVisitante.getNombre());
+    }
+    
+    public void mostrarAmonestados(int[] tarjetasAmarillasLocal, int[] tarjetasRojasLocal,
+                                     int[] tarjetasAmarillasVisitante, int[] tarjetasRojasVisitante) {
         System.out.println("Jugadores amonestados:");
-        for (int i = 0; i < 11; i++) 
-        {
-            if (tarjetasAmarillasLocal[i] > 0 || tarjetasRojasLocal[i] > 0) 
-            {
+        for (int i = 0; i < 11; i++) {
+            if (tarjetasAmarillasLocal[i] > 0 || tarjetasRojasLocal[i] > 0) {
                 System.out.println("Jugador " + i + " del " + this.equipoLocal.getNombre() + " - Amarillas: " + tarjetasAmarillasLocal[i] + " | Rojas: " + tarjetasRojasLocal[i]);
             }
-            if (tarjetasAmarillasVisitante[i] > 0 || tarjetasRojasVisitante[i] > 0) 
-            {
+            if (tarjetasAmarillasVisitante[i] > 0 || tarjetasRojasVisitante[i] > 0) {
                 System.out.println("Jugador " + i + " del " + this.equipoVisitante.getNombre() + " - Amarillas: " + tarjetasAmarillasVisitante[i] + " | Rojas: " + tarjetasRojasVisitante[i]);
             }
         }
-        if (golesEquipo1 > golesEquipo2)
-        {
+    }
+    
+    public void actualizarPuntos(int golesEquipo1, int golesEquipo2) {
+        if (golesEquipo1 > golesEquipo2) {
             this.equipoLocal.setPuntos(this.equipoLocal.getPuntos() + 3);
-        }
-        else if (golesEquipo2 > golesEquipo1)
-        {
+        } else if (golesEquipo2 > golesEquipo1) {
             this.equipoVisitante.setPuntos(this.equipoVisitante.getPuntos() + 3);
-        }
-        else
-        {
+        } else {
             this.equipoLocal.setPuntos(this.equipoLocal.getPuntos() + 1);
             this.equipoVisitante.setPuntos(this.equipoVisitante.getPuntos() + 1);
         }
-        
     }
 @Override
 public boolean equals(Object obj) 

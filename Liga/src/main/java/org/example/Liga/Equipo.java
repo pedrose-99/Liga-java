@@ -1,6 +1,7 @@
 package org.example.Liga;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class Equipo 
 {
@@ -113,13 +114,22 @@ public class Equipo
 
     public int calcularMediaEquipo()
     {
+        Random ran = new Random();
         int media = 0;
-        for(Jugador jugadorprueba : this.jugadores)
+        if (this.nombre.equals("Barcelona") || this.nombre.equals("Atletico de Madrid") || this.nombre.equals("Real Madrid"))
         {
-            media = media + jugadorprueba.getStats();
+            int dado = ran.nextInt(80, 90);
+            this.mediaStats = dado;
         }
-        media = media/this.jugadores.length;
-        this.mediaStats = media;
+        else
+        {
+            for(Jugador jugadorprueba : this.jugadores)
+            {
+                media = media + jugadorprueba.getStats();
+            }
+            media = media/this.jugadores.length;
+            this.mediaStats = media;
+        }
         return media;
     }
 

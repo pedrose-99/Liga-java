@@ -42,6 +42,11 @@ public class Jornada
 
     public void simularJornada()
     {
+        System.out.println("---------------------------------------");
+        System.out.println("---------------------------------------");
+        System.out.println("Bienvenidos a la Jornada " + (this.numJornada));
+        System.out.println("---------------------------------------");
+        System.out.println("---------------------------------------");
         for (Partido partido : this.partidos)
         {
             partido.simularPartido();

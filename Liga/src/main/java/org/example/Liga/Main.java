@@ -34,39 +34,37 @@ public class Main
 			case 1:
 				firstName = fakerEs.name().firstName();
 				lastName = fakerEs.name().lastName();
-				dado1 = ran.nextInt(99);
+				dado1 = ran.nextInt(70,90);
 				continente = Continente.EUROPA;
 				break;
 			case 2:
 				firstName = fakerAs.name().firstName();
 				lastName = fakerAs.name().lastName();
-				dado1 = ran.nextInt(99);
+				dado1 = ran.nextInt(70,90);
 				continente = Continente.ASIA;
 				break;			
 			case 3:
 				firstName = fakerCN.name().firstName();
 				lastName = fakerCN.name().lastName();
-				dado1 = ran.nextInt(99);
+				dado1 = ran.nextInt(70,90);
 				continente = Continente.NORTEAMERICA;
 				break;
 			case 4:
 				firstName = fakerBR.name().firstName();
 				lastName = fakerBR.name().lastName();
-				dado1 = ran.nextInt(99);
+				dado1 = ran.nextInt(70,90);
 				continente = Continente.SUDAMERICA;
 				break;
-			
 			case 5:
 				firstName = fakerAF.name().firstName();
 				lastName = fakerAF.name().lastName();
-				dado1 = ran.nextInt(99);
+				dado1 = ran.nextInt(70,90);
 				continente = Continente.AFRICA;
 				break;
-			
 			default:
 				firstName = fakerEn.name().firstName();
 				lastName = fakerEn.name().lastName();
-				dado1 = ran.nextInt(99);
+				dado1 = ran.nextInt(70,90);
 				continente = Continente.OCEANIA;
 				break;
 		}
@@ -112,7 +110,7 @@ public class Main
         String[] equipos = {
             "Barcelona",
             "Real Madrid",
-            "Atlético de Madrid",
+            "Atletico de Madrid",
             "Sevilla",
             "Valencia",
             "Villarreal",
