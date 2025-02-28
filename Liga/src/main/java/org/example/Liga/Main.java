@@ -104,7 +104,7 @@ public class Main
 		return (equipoPrueba);
 	}
 
-	public static List<Equipo>  crearLiga()
+	public static ArrayList<Equipo>  crearLiga()
 	{
 		Equipo[] arrayEquipos = new Equipo[20];
 		int i;
@@ -137,7 +137,7 @@ public class Main
 			arrayEquipos[i] = crearEquipo(equipo);
 			i++;
 		}
-		List<Equipo> liga = new ArrayList<>(Arrays.asList(arrayEquipos));
+		ArrayList<Equipo> liga = new ArrayList<>(Arrays.asList(arrayEquipos));
 		return liga;
 	}
 
@@ -154,9 +154,8 @@ public class Main
 			System.out.println("--------------------------------------------------------------");
 		}
 	}
-	public static void generarCalendario()
+	public static ArrayList<Jornada> generarCalendario(List<Equipo> equipos)
 	{
-		List<Equipo> equipos = crearLiga();
 		Partido partido;
 		ArrayList<Jornada> jornadas = new ArrayList<>();
 		Jornada jornada;
@@ -187,17 +186,20 @@ public class Main
 			}
 		}
 		imprimirJornadas(jornadas);
+
+		return (jornadas);
 	}
 
 	public static void main(String[] args)
 	{
-		//generarCalendario();
 		Equipo Atleti = crearEquipo("Atleti");
 		Equipo Barcelona = crearEquipo("Barcelona");
 		Partido partido = new Partido(Atleti, Barcelona);
-		partido.simularPartido();
+	//	partido.simularPartido();
+		ArrayList<Equipo> equipos = crearLiga();
+		ArrayList<Jornada> jornadas = generarCalendario(equipos);
+		Liga liga = new Liga("BBVA", equipos, jornadas);
+		Menu.menuLiga(liga);
 	}
-
-
 
 }

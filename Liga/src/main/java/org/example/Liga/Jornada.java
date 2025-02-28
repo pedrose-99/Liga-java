@@ -40,9 +40,11 @@ public class Jornada
         this.partidos.add(partido);
     }
 
-    public void jugarPartido()
+    public void simularJornada()
     {
-        
+        for (Partido partido : this.partidos)
+        {
+            partido.simularPartido();
+        }
     }
-
 }

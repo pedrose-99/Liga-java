@@ -2,6 +2,7 @@ package org.example.Liga;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Liga 
 {
@@ -10,11 +11,12 @@ public class Liga
     private ArrayList<Jornada> jornadas = new ArrayList<>();
 
 
-    public Liga(String nombre, ArrayList<Equipo> equipos, ArrayList<Jornada> jornadas)
+
+    public Liga (String nombre, ArrayList<Equipo> equipos, ArrayList<Jornada> jornadas)
     {
         this.nombre = nombre;
         this.equipos = equipos;
-        this.jornadas =jornadas;
+        this.jornadas = jornadas;
     }
 
 

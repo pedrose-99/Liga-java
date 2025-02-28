@@ -27,16 +27,18 @@ public class Menu
 
     }
 
-    public void BienvenidoAlSimulador()
+    public static void BienvenidoAlSimulador() //Esto en un bucle para ver que has elegido una de las 4 opciones.
     {
         System.out.println("\nBIENVENIDO AL SIMULADOR DE LA XTART LEAGUE");
         System.out.println("\nSELECCIONA UNA OPCIÓN PARA COMENZAR TU AVENTURA Y DISFRUTAR DE NUESTRA LIGA MIXTA");
-        System.out.println("1. Ver ligas");
-        System.out.println("2. Salir");
+        System.out.println("1. Ver Clasificación");
+        System.out.println("2. Simular Jornada");
+        System.out.println("3. Ver máximos goleadores");
+        System.out.println("4. Salir");
         System.out.print("Elige una opción: ");
     }
 
-    public void menuLiga()
+    public static void menuLiga(Liga liga)
     {
         
         Scanner teclado = new Scanner(System.in);
@@ -44,22 +46,29 @@ public class Menu
     
         do {
             BienvenidoAlSimulador();
-
-            opcion = teclado.nextInt();
+            opcion = teclado.nextInt(); //Gestion getNumero(mirar mi proyecto de aeropuerto)
             
             switch (opcion) 
             {
                 case 1:
-                    //Ver ligas
-                    funcionVerLiga();
+                    //Ver Clasificacion
+                    
                     break;
                 case 2:
-                    //Salir
+                    //Simular Jornada
+                    liga.getJornadas().get(1).simularJornada();
                     break;
+                case 3:
+                    //Ver maximos goleadores.
+                    break ;
+                case 4:
+                    //Salir;
+                    break ;
                 default:
                     System.out.println("Opción no válida, intenta de nuevo.");
+                    break ; //No se si se tiene que poder
             }
-        } while (opcion != 2);
+        } while (opcion != 4);
 
         teclado.close(); 
     }
