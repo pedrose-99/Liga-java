@@ -54,7 +54,7 @@ public class Partido {
             
             int probabilidadAtajada = ran.nextInt(100);
             if (probabilidadAtajada < 30) { 
-                eventos.add(minutoActual + ": ¡Atajada espectacular de " + portero.getNombre() + " " + portero.getApellido() + "! Evita el gol del " + equipoAtacante.getNombre());
+                eventos.add(minutoActual + ": ¡Parada espectacular de " + portero.getNombre() + " " + portero.getApellido() + "! Evita el gol del " + equipoAtacante.getNombre());
             } else {
                 golesEquipo++;
                 eventos.add(minutoActual + ": Gol del " + equipoAtacante.getNombre() + " (" + goleador.getNombre() + " " + goleador.getApellido() + ")");
