@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-public class Partido 
+import org.example.Liga.personas.Jugador;
+
+public class Partido
 {
     private Equipo equipoLocal;
     private Equipo equipoVisitante;
@@ -57,7 +59,8 @@ public class Partido
         this.numeroGoles = numeroGoles;
     }
 
-    public void simularPartido() {
+    public void simularPartido() 
+    {
         Random ran = new Random();
         int golesEquipo1 = 0;
         int golesEquipo2 = 0;
@@ -68,18 +71,21 @@ public class Partido
         int[] tarjetasRojasLocal = new int[11];
         int[] tarjetasAmarillasVisitante = new int[11];
         int[] tarjetasRojasVisitante = new int[11];
-        
+
         System.out.println("---------------------------------------------");
         System.out.println("---------------------------------------------");
         System.out.println("BIENVENIDOS AL PARTIDO ENTRE " + this.equipoLocal.getNombre() + " vs " + this.equipoVisitante.getNombre());
         System.out.println("---------------------------------------------");
         System.out.println("---------------------------------------------");
-        for (int i = 0; i < 5; i++) {
-            if (this.equipoLocal.getMediaStats() > this.equipoVisitante.getMediaStats()) {
+        
+        for (int i = 0; i < 5; i++) 
+        {
+            if (this.equipoLocal.getMediaStats() > this.equipoVisitante.getMediaStats()) 
+            {
                 golesEquipo1 = simularGolMayorMedia(minutoActual, golesEquipo1, this.equipoLocal, eventos, ran);
                 golesEquipo2 = simularGolMenorMedia(minutoActual, golesEquipo2, this.equipoVisitante, eventos, ran);
-            }
-            else
+            } 
+            else 
             {
                 golesEquipo2 = simularGolMayorMedia(minutoActual, golesEquipo2, this.equipoLocal, eventos, ran);
                 golesEquipo1 = simularGolMenorMedia(minutoActual, golesEquipo1, this.equipoVisitante, eventos, ran);
@@ -92,122 +98,159 @@ public class Partido
         mostrarAmonestados(tarjetasAmarillasLocal, tarjetasRojasLocal, tarjetasAmarillasVisitante, tarjetasRojasVisitante);
         actualizarPuntos(golesEquipo1, golesEquipo2);
     }
-    
-    public int simularGolMayorMedia(int minutoActual, int golesEquipo, Equipo equipo, List<String> eventos, Random ran) {
+
+    public int simularGolMayorMedia(int minutoActual, int golesEquipo, Equipo equipo, List<String> eventos, Random ran) 
+    {
         int dado = ran.nextInt(10);
-        if (dado <= 7 && minutoActual < 90) {
-            minutoActual += ran.nextInt(1, 17);
+        if (dado <= 7 && minutoActual < 90) 
+        {
+            minutoActual += ran.nextInt(1, 24);
             if (minutoActual > 90) return minutoActual;
             
             golesEquipo++;
             int marcarGol = ran.nextInt(1, 11);
-            eventos.add(minutoActual + ": Gol del " + equipo.getNombre() + " (Jugador " + marcarGol + ")");
+            Jugador goleador = equipo.getJugadores()[marcarGol - 1]; 
+            eventos.add(minutoActual + ": Gol del " + equipo.getNombre() + " (" + goleador.getNombre() + " " + goleador.getApellido() + ")");
             
-            if (ran.nextInt(10) <= 7) {
+            if (ran.nextInt(10) <= 7) 
+            {
                 int darAsistencia;
-                do {
+                do 
+                {
                     darAsistencia = ran.nextInt(1, 11);
-                } while (darAsistencia == marcarGol);
-                eventos.add(minutoActual + ": Asistencia del " + equipo.getNombre() + " (Jugador " + darAsistencia + ")");
+                } 
+                while (darAsistencia == marcarGol);            
+                Jugador asistente = equipo.getJugadores()[darAsistencia - 1]; 
+                eventos.add(minutoActual + ": Asistencia del " + equipo.getNombre() + " (" + asistente.getNombre() + " " + asistente.getApellido() + ")");
             }
         }
         return golesEquipo;
     }
 
-    public int simularGolMenorMedia(int minutoActual, int golesEquipo, Equipo equipo, List<String> eventos, Random ran) {
+    public int simularGolMenorMedia(int minutoActual, int golesEquipo, Equipo equipo, List<String> eventos, Random ran) 
+    {
         int dado = ran.nextInt(10);
-        if (dado <= 4 && minutoActual < 90) {
-            minutoActual += ran.nextInt(1, 17);
+        if (dado <= 4 && minutoActual < 90) 
+        {
+            minutoActual += ran.nextInt(1, 90);
             if (minutoActual > 90) return minutoActual;
             
             golesEquipo++;
             int marcarGol = ran.nextInt(1, 11);
-            eventos.add(minutoActual + ": Gol del " + equipo.getNombre() + " (Jugador " + marcarGol + ")");
+            Jugador goleador = equipo.getJugadores()[marcarGol - 1]; 
+            eventos.add(minutoActual + ": Gol del " + equipo.getNombre() + " (" + goleador.getNombre() + " " + goleador.getApellido() + ")");
             
-            if (ran.nextInt(10) <= 7) {
+            if (ran.nextInt(10) <= 7) 
+            {
                 int darAsistencia;
-                do {
+                do 
+                {
                     darAsistencia = ran.nextInt(1, 11);
-                } while (darAsistencia == marcarGol);
-                eventos.add(minutoActual + ": Asistencia del " + equipo.getNombre() + " (Jugador " + darAsistencia + ")");
+                } 
+                while (darAsistencia == marcarGol);
+                Jugador asistente = equipo.getJugadores()[darAsistencia - 1]; 
+                eventos.add(minutoActual + ": Asistencia del " + equipo.getNombre() + " (" + asistente.getNombre() + " " + asistente.getApellido() + ")");
             }
         }
         return golesEquipo;
     }
-    
-    public void simularTarjetas(int minutoActual, int[] tarjetasAmarillasLocal, int[] tarjetasRojasLocal,
-                                 int[] tarjetasAmarillasVisitante, int[] tarjetasRojasVisitante,
-                                 List<String> eventos, Random ran) {
-        if (ran.nextInt(10) < 3 && minutoActual < 90) {
+
+    public void simularTarjetas(int minutoActual, int[] tarjetasAmarillasLocal, int[] tarjetasRojasLocal,int[] tarjetasAmarillasVisitante, int[] tarjetasRojasVisitante, List<String> eventos, Random ran) 
+    {
+        if (ran.nextInt(10) < 3 && minutoActual < 90) 
+        {
             int jugador = ran.nextInt(0, 11);
             boolean esLocal = ran.nextBoolean();
             int minutoTarjeta = Math.min(minutoActual + ran.nextInt(1, 5), 90);
             
-            if (esLocal) {
+            if (esLocal) 
+            {
                 gestionarTarjeta(jugador, this.equipoLocal, tarjetasAmarillasLocal, tarjetasRojasLocal, minutoTarjeta, eventos);
-            } else {
+            } 
+            else 
+            {
                 gestionarTarjeta(jugador, this.equipoVisitante, tarjetasAmarillasVisitante, tarjetasRojasVisitante, minutoTarjeta, eventos);
             }
         }
     }
-    
-    public void gestionarTarjeta(int jugador, Equipo equipo, int[] tarjetasAmarillas, int[] tarjetasRojas, int minutoTarjeta, List<String> eventos) {
-        if (tarjetasRojas[jugador] == 0) {
+
+    public void gestionarTarjeta(int jugador, Equipo equipo, int[] tarjetasAmarillas, int[] tarjetasRojas, int minutoTarjeta, List<String> eventos) 
+    {
+        if (tarjetasRojas[jugador] == 0) 
+        {
             tarjetasAmarillas[jugador]++;
-            eventos.add(minutoTarjeta + ": Tarjeta amarilla para " + equipo.getNombre() + " (Jugador " + jugador + ")");
+            Jugador jugadorTarjeta = equipo.getJugadores()[jugador]; 
+            eventos.add(minutoTarjeta + ": Tarjeta amarilla para " + equipo.getNombre() + " (" + jugadorTarjeta.getNombre() + " " + jugadorTarjeta.getApellido() + ")");
+
             
-            if (tarjetasAmarillas[jugador] == 2) {
+            if (tarjetasAmarillas[jugador] == 2) 
+            {
                 tarjetasRojas[jugador] = 1;
-                eventos.add(minutoTarjeta + ": ¡Expulsión! Tarjeta roja para " + equipo.getNombre() + " (Jugador " + jugador + ")");
+                eventos.add(minutoTarjeta + ": ¡Expulsión! Tarjeta roja para " + equipo.getNombre() + " (" + jugadorTarjeta.getNombre() + " " + jugadorTarjeta.getApellido() + ")");
+
             }
         }
     }
-    
-    public void mostrarEventos(List<String> eventos) {
+
+    public void mostrarEventos(List<String> eventos) 
+    {
         eventos.sort(Comparator.comparingInt(e -> Integer.parseInt(e.split(":")[0])));
         eventos.forEach(System.out::println);
     }
-    
-    public void mostrarMarcador(int golesEquipo1, int golesEquipo2) {
+
+    public void mostrarMarcador(int golesEquipo1, int golesEquipo2) 
+    {
         System.out.println("Marcador: " + this.equipoLocal.getNombre() + " " + golesEquipo1 + " - " + golesEquipo2 + " " + this.equipoVisitante.getNombre());
     }
-    
+
     public void mostrarAmonestados(int[] tarjetasAmarillasLocal, int[] tarjetasRojasLocal,
-                                     int[] tarjetasAmarillasVisitante, int[] tarjetasRojasVisitante) {
+                                     int[] tarjetasAmarillasVisitante, int[] tarjetasRojasVisitante) 
+                                     {
         System.out.println("Jugadores amonestados:");
         for (int i = 0; i < 11; i++) {
-            if (tarjetasAmarillasLocal[i] > 0 || tarjetasRojasLocal[i] > 0) {
-                System.out.println("Jugador " + i + " del " + this.equipoLocal.getNombre() + " - Amarillas: " + tarjetasAmarillasLocal[i] + " | Rojas: " + tarjetasRojasLocal[i]);
+            if (tarjetasAmarillasLocal[i] > 0 || tarjetasRojasLocal[i] > 0) 
+            {
+                Jugador jugadorLocal = this.equipoLocal.getJugadores()[i]; 
+                System.out.println(jugadorLocal.getNombre() + " " + jugadorLocal.getApellido() + " del " + this.equipoLocal.getNombre() + " - Amarillas: " + tarjetasAmarillasLocal[i] + " | Rojas: " + tarjetasRojasLocal[i]);
+
             }
-            if (tarjetasAmarillasVisitante[i] > 0 || tarjetasRojasVisitante[i] > 0) {
-                System.out.println("Jugador " + i + " del " + this.equipoVisitante.getNombre() + " - Amarillas: " + tarjetasAmarillasVisitante[i] + " | Rojas: " + tarjetasRojasVisitante[i]);
+            if (tarjetasAmarillasVisitante[i] > 0 || tarjetasRojasVisitante[i] > 0) 
+            {
+                Jugador jugadorVisitante = this.equipoVisitante.getJugadores()[i];
+                System.out.println(jugadorVisitante.getNombre() + " " + jugadorVisitante.getApellido() + " del " + this.equipoVisitante.getNombre() + " - Amarillas: " + tarjetasAmarillasVisitante[i] + " | Rojas: " + tarjetasRojasVisitante[i]);
+
             }
         }
     }
-    
-    public void actualizarPuntos(int golesEquipo1, int golesEquipo2) {
-        if (golesEquipo1 > golesEquipo2) {
+
+    public void actualizarPuntos(int golesEquipo1, int golesEquipo2) 
+    {
+        if (golesEquipo1 > golesEquipo2) 
+        {
             this.equipoLocal.setPuntos(this.equipoLocal.getPuntos() + 3);
-        } else if (golesEquipo2 > golesEquipo1) {
+        } 
+        else if (golesEquipo2 > golesEquipo1) 
+        {
             this.equipoVisitante.setPuntos(this.equipoVisitante.getPuntos() + 3);
-        } else {
+        } 
+        else 
+        {
             this.equipoLocal.setPuntos(this.equipoLocal.getPuntos() + 1);
             this.equipoVisitante.setPuntos(this.equipoVisitante.getPuntos() + 1);
         }
     }
-@Override
-public boolean equals(Object obj) 
-{
-    if (this == obj) return true;
-    if (obj == null || getClass() != obj.getClass()) return false;
-    
-    Partido other = (Partido) obj;
-    
-    return Objects.equals(equipoLocal, other.equipoLocal) &&
-           Objects.equals(equipoVisitante, other.equipoVisitante) &&
-           Arrays.equals(resultado, other.resultado) &&
-           numeroGoles == other.numeroGoles;
-}
 
-
+    @Override
+    public boolean equals(Object obj) 
+    {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        
+        Partido other = (Partido) obj;
+        
+        return Objects.equals(equipoLocal, other.equipoLocal) &&
+               Objects.equals(equipoVisitante, other.equipoVisitante) &&
+               Arrays.equals(resultado, other.resultado) &&
+               numeroGoles == other.numeroGoles;
+    }
 }
