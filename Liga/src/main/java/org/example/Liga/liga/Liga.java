@@ -5,9 +5,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 import org.example.Liga.GestionNumero;
+
+import com.github.javafaker.Faker;
 
 public class Liga 
 {
@@ -16,10 +19,11 @@ public class Liga
     private ArrayList<Jornada> jornadas = new ArrayList<>();
 
 
-    public Liga()
+    public Liga(String[] equipos)
     {
-        this.nombre = "BBVA";
-        this.equipos = this.crearArrayEquipos();
+        Faker fakerEs = new Faker(new Locale("es"));
+        this.nombre = fakerEs.pokemon().name();
+        this.equipos = this.crearArrayEquipos(equipos);
         this.jornadas = this.generarCalendario(this.equipos);
 
     }
@@ -119,7 +123,7 @@ public class Liga
     public void BienvenidoAlSimulador() //Esto en un bucle para ver que has elegido una de las 4 opciones.
     {
         System.out.println("\nBIENVENIDO AL SIMULADOR DE LA XTART LEAGUE");
-        System.out.println("\nSELECCIONA UNA OPCIÓN PARA COMENZAR TU AVENTURA Y DISFRUTAR DE NUESTRA LIGA MIXTA");
+        System.out.println("\nSELECCIONA UNA OPCIÓN PARA COMENZAR TU AVENTURA Y DISFRUTAR DE NUESTRA LIGA " + this.nombre.toUpperCase());
         System.out.println("1. Ver Clasificación");
         System.out.println("2. Simular Jornada");
         System.out.println("3. Ver Jornadas");
@@ -128,9 +132,9 @@ public class Liga
         System.out.print("Elige una opción: ");
     }
 
-    public  void verClasificacion(ArrayList<Equipo> equipos, int numJornada)
+    public  void verClasificacion(int numJornada)
     {
-        Collections.sort(equipos, new Comparator<Equipo>() {
+        Collections.sort(this.equipos, new Comparator<Equipo>() {
             @Override
             public int compare(Equipo p1, Equipo p2) {
                 return new Integer(p2.getPuntos()).compareTo(new Integer(p1.getPuntos()));
@@ -142,9 +146,9 @@ public class Liga
         i = 1;
         System.out.println("---------------------------");
         System.out.println("---------------------------");
-        System.out.println("Clasificación Jornada " + numJornada);
+        System.out.println("Clasificación Jornada " + numJornada + " Liga " + this.nombre.toUpperCase());
         System.out.println("----- EQUIPOS ---------------- PT--------------");
-        for (Equipo equipo: equipos)
+        for (Equipo equipo: this.equipos)
         {
             System.out.println(i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos());
             i++;
@@ -157,7 +161,7 @@ public class Liga
     {
         System.out.println("-----------------------");
         System.out.println("-----------------------");
-        System.out.println("Equipos de la liga");
+        System.out.println("Equipos de la liga "+ this.nombre.toUpperCase());
         System.out.println("-----------------------");
         System.out.println("-----------------------");
         for(Equipo equipo : equipos)
@@ -167,33 +171,10 @@ public class Liga
         }
     }
 
-    public  ArrayList<Equipo>  crearArrayEquipos()
+    public  ArrayList<Equipo>  crearArrayEquipos(String[] equipos)
 	{
         Equipo equipoAux = new Equipo();
         ArrayList<Equipo> equiposLiga = new ArrayList<>();
-
-        String[] equipos = {
-            "Barcelona",
-            "Real Madrid",
-            "Atletico de Madrid",
-            "Sevilla",
-            "Valencia",
-            "Villarreal",
-            "Real Sociedad",
-            "Betis",
-            "Athletic Bilbao",
-            "Getafe",
-            "Espanyol",
-            "Osasuna",
-            "Alavés",
-            "Levante",
-            "Celta de Vigo",
-            "Granada",
-            "Cadiz",
-            "Elche",
-            "Mallorca",
-            "Rayo Vallecano"
-        };
 
 		for (String equipo: equipos)
 		{
@@ -202,9 +183,67 @@ public class Liga
 		return equiposLiga;
 	}
 
+
+
+
+
+
+
+
+
+    public  void menuVariasLigas(int numJornada) 
+    {
+        int opcion;
+        ArrayList<Equipo> equiposClasificacion;
+
+        do {
+            if (numJornada == this.jornadas.size())
+            {
+                opcion = 5;
+                System.out.println("-----------------------");
+                System.out.println("-----------------------");
+                System.out.println("La liga "+ this.nombre.toUpperCase() +" ha acabado.");
+                equiposClasificacion = this.getEquipos();
+                verClasificacion( numJornada);
+                System.out.println("-----------------------");
+            }
+            else
+            {
+                BienvenidoAlSimulador();
+                opcion = GestionNumero.gestionNumero();
+            }
+            switch (opcion) 
+            {
+                case 1:
+                    //Ver Clasificacion
+                    equiposClasificacion = this.getEquipos();
+                    verClasificacion(numJornada);
+                    break;
+                case 2:
+                    //Simular Jornada
+                    this.getJornadas().get(numJornada).simularJornada();
+                    break;
+                case 3:
+                //Imprimir jornadas
+                    this.imprimirJornadas(jornadas);
+                    break ;
+                case 4:
+                //Ver equipos y sus medias
+                    verEquipos(this.getEquipos());
+                    break ;
+                case 5:
+                    //Salir
+                    break ;
+                default:
+                    System.out.println("Opción no válida, intenta de nuevo.");
+                    break ;
+            }
+        } while (opcion != 5 && opcion != 2);
+    }
+
+
     public  void menuLiga() 
     {
-        Scanner teclado = new Scanner(System.in);
         int opcion;
         int numJornada;
         ArrayList<Equipo> equiposClasificacion;
@@ -218,7 +257,7 @@ public class Liga
                 System.out.println("-----------------------");
                 System.out.println("La liga ha acabado.");
                 equiposClasificacion = this.getEquipos();
-                verClasificacion(equiposClasificacion, numJornada);
+                verClasificacion( numJornada);
                 System.out.println("-----------------------");
             }
             else
@@ -231,7 +270,7 @@ public class Liga
                 case 1:
                     //Ver Clasificacion
                     equiposClasificacion = this.getEquipos();
-                    verClasificacion(equiposClasificacion, numJornada);
+                    verClasificacion( numJornada);
                     break;
                 case 2:
                     //Simular Jornada
@@ -254,7 +293,5 @@ public class Liga
                     break ;
             }
         } while (opcion != 5);
-
-        teclado.close(); 
     }
 }
