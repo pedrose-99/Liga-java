@@ -1,12 +1,10 @@
 package org.example.Liga;
 
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Scanner;
-
-import org.example.Liga.liga.Equipo;
 import org.example.Liga.liga.Liga;
-import com.github.javafaker.Faker;
+import org.example.Liga.personas.Portero;
+import org.example.Liga.enumLiga.Continente;
+import org.example.Liga.enumLiga.Posicion;
 
 public class Main {
     public static void opcionesLiga() {
@@ -19,6 +17,12 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        Portero portero1 = new Portero("Iker", "Casillas", Continente.EUROPA, 90, Posicion.PORTERO);
+        System.out.println(portero1); 
+        portero1.realizarParada();
+        portero1.realizarParada();
+        System.out.println(portero1);
+
         String[] equipos1 = {
             "Barcelona", "Real Madrid", "Atletico de Madrid", "Sevilla", "Valencia", 
             "Villarreal", "Real Sociedad", "Betis", "Athletic Bilbao", "Getafe", 
