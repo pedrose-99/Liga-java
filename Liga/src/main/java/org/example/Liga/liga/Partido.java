@@ -1,6 +1,7 @@
 package org.example.Liga.liga;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -35,7 +36,6 @@ public class Partido {
             golesEquipo2 = simularGolConPortero(minutoActual, golesEquipo2, this.equipoVisitante, this.equipoLocal, eventos, ran);
         }
 
-        ordenarEventosPorMinuto(eventos);
         mostrarEventos(eventos);
         mostrarMarcador(golesEquipo1, golesEquipo2);
     }
@@ -55,7 +55,7 @@ public class Partido {
             
             int probabilidadAtajada = ran.nextInt(100);
             if (probabilidadAtajada < 30) { 
-                eventos.add(minutoActual + ": ¡Parada espectacular de " + portero.getNombre() + " " + portero.getApellido() + "! Evita el gol del " + equipoAtacante.getNombre());
+                eventos.add(minutoActual + ": ¡parada espectacular de " + portero.getNombre() + " " + portero.getApellido() + "! Evita el gol del " + equipoAtacante.getNombre());
             } else {
                 golesEquipo++;
                 eventos.add(minutoActual + ": Gol del " + equipoAtacante.getNombre() + " (" + goleador.getNombre() + " " + goleador.getApellido() + ")");
@@ -71,10 +71,6 @@ public class Partido {
             }
         }
         return golesEquipo;
-    }
-
-    public void ordenarEventosPorMinuto(List<String> eventos) {
-        eventos.sort(Comparator.comparingInt(e -> Integer.parseInt(e.split(":")[0])));
     }
 
     public void mostrarEventos(List<String> eventos) {
