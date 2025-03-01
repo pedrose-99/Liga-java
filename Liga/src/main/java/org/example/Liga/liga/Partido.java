@@ -1,7 +1,6 @@
 package org.example.Liga.liga;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -36,6 +35,7 @@ public class Partido {
             golesEquipo2 = simularGolConPortero(minutoActual, golesEquipo2, this.equipoVisitante, this.equipoLocal, eventos, ran);
         }
 
+        ordenarEventosPorMinuto(eventos);
         mostrarEventos(eventos);
         mostrarMarcador(golesEquipo1, golesEquipo2);
     }
@@ -46,10 +46,11 @@ public class Partido {
             minutoActual += ran.nextInt(1, 24);
             if (minutoActual > 90) return golesEquipo;
 
-            int marcarGol = ran.nextInt(1, 10);
+            int marcarGol = ran.nextInt(1, 10); 
             Jugador goleador = equipoAtacante.getJugadores()[marcarGol - 1];
 
-            Jugador portero = equipoDefensor.getJugadores()[0];
+            
+            Jugador portero = equipoDefensor.getJugadores()[0]; 
 
             
             int probabilidadAtajada = ran.nextInt(100);
@@ -70,6 +71,10 @@ public class Partido {
             }
         }
         return golesEquipo;
+    }
+
+    public void ordenarEventosPorMinuto(List<String> eventos) {
+        eventos.sort(Comparator.comparingInt(e -> Integer.parseInt(e.split(":")[0])));
     }
 
     public void mostrarEventos(List<String> eventos) {
