@@ -1,4 +1,4 @@
-package org.example.Liga;
+package org.example.Liga.enumLiga;
 
 public enum Posicion {
 

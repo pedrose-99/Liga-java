@@ -1,4 +1,4 @@
-package org.example.Liga;
+package org.example.Liga.liga;
 
 import java.util.ArrayList;
 import java.util.Arrays;
