@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 import org.example.Liga.GestionNumero;
+import org.example.Liga.PrintTexto;
 
 import com.github.javafaker.Faker;
 
@@ -141,35 +142,33 @@ public class Liga
             }
         });
 
-        int i;
+        int i = 1;
 
-        i = 1;
-        System.out.println("---------------------------");
-        System.out.println("---------------------------");
-        System.out.println("Clasificación Jornada " + numJornada + " Liga " + this.nombre.toUpperCase());
-        System.out.println("----- EQUIPOS ---------------- PT--------------");
-        for (Equipo equipo: this.equipos)
-        {
-            System.out.println(i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos());
-            i++;
-        }
-        System.out.println("---------------------------");
-        System.out.println("---------------------------");
-    }
+System.out.println(PrintTexto.BLUE + "---------------------------");
+System.out.println(PrintTexto.RED + "Clasificación Jornada " + numJornada + " Liga " + this.nombre.toUpperCase());
+System.out.println(PrintTexto.YELLOW + "----- EQUIPOS ---------------- PT--------------");
 
-    public  void verEquipos(ArrayList<Equipo> equipos)
-    {
-        System.out.println("-----------------------");
-        System.out.println("-----------------------");
-        System.out.println("Equipos de la liga "+ this.nombre.toUpperCase());
-        System.out.println("-----------------------");
-        System.out.println("-----------------------");
-        for(Equipo equipo : equipos)
-        {
-            System.out.println("-----------------------");
-            System.out.println(equipo.getNombre() + " media del equipo: " + equipo.getMediaStats());
-        }
+for (Equipo equipo : this.equipos) {
+    System.out.println(PrintTexto.CYAN + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos());
+    i++; 
+}
+
+System.out.println(PrintTexto.BLUE + "---------------------------");
+}
+        
+
+public void verEquipos(ArrayList<Equipo> equipos) {
+    System.out.println(PrintTexto.BLUE + "-----------------------" );
+    System.out.println(PrintTexto.BLUE + "-----------------------");
+    System.out.println(PrintTexto.YELLOW + "Equipos de la liga " );
+    System.out.println(PrintTexto.BLUE + "-----------------------" );
+    System.out.println(PrintTexto.BLUE + "-----------------------" );
+
+    for (Equipo equipo : equipos) {
+        System.out.println(PrintTexto.GREEN + "-----------------------" );
+        System.out.println(PrintTexto.CYAN + equipo.getNombre() + PrintTexto.RESET + PrintTexto.RED + " media del equipo: " + equipo.getMediaStats());
     }
+}
 
     public  ArrayList<Equipo>  crearArrayEquipos(String[] equipos)
 	{
