@@ -181,15 +181,6 @@ public void verEquipos(ArrayList<Equipo> equipos) {
 		}
 		return equiposLiga;
 	}
-
-
-
-
-
-
-
-
-
     public  void menuVariasLigas(int numJornada) 
     {
         int opcion;
@@ -291,6 +282,6 @@ public void verEquipos(ArrayList<Equipo> equipos) {
                     System.out.println("Opción no válida, intenta de nuevo.");
                     break ;
             }
-        } while (opcion != 5);
-    }
+        } while (opcion!=5);
+}
 }
