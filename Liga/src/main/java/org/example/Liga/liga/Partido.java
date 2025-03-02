@@ -105,7 +105,7 @@ public class Partido
         
     }
 
-    public int simularGolMayorMedia(int minutoActual, int golesEquipo, Equipo equipo, List<String> eventos, Random ran, boolean esLocal) 
+    public int simularGolMayorMedia(int minutoActual, int golesEquipo1, Equipo equipo, List<String> eventos, Random ran, boolean esLocal) 
     {
         int dado = ran.nextInt(10);
         if (dado <= 7 && minutoActual < 90) 
@@ -114,10 +114,10 @@ public class Partido
             if (minutoActual > 90) return minutoActual;
             if (porteroAtaja(ran, esLocal)) 
             {
-                return golesEquipo;
+                return golesEquipo1;
             }
             
-            golesEquipo++;
+            golesEquipo1++;
             int marcarGol = ran.nextInt(1, 11);
             Jugador goleador = equipo.getJugadores()[marcarGol - 1]; 
             eventos.add(minutoActual + ": Gol del " + equipo.getNombre() + " (" + goleador.getNombre() + " " + goleador.getApellido() + ")");
@@ -134,10 +134,10 @@ public class Partido
                 eventos.add(minutoActual + ": Asistencia del " + equipo.getNombre() + " (" + asistente.getNombre() + " " + asistente.getApellido() + ")");
             }
         }
-        return golesEquipo;
+        return golesEquipo1;
     }
 
-    public int simularGolMenorMedia(int minutoActual, int golesEquipo, Equipo equipo, List<String> eventos, Random ran, boolean esLocal) 
+    public int simularGolMenorMedia(int minutoActual, int golesEquipo2, Equipo equipo, List<String> eventos, Random ran, boolean esLocal) 
     {
         int dado = ran.nextInt(10);
         if (dado <= 4 && minutoActual < 90) 
@@ -146,10 +146,10 @@ public class Partido
             if (minutoActual > 90) return minutoActual;
             if (porteroAtaja(ran, esLocal)) 
             {
-                return golesEquipo;
+                return golesEquipo2;
             }
             
-            golesEquipo++;
+            golesEquipo2++;
             int marcarGol = ran.nextInt(1, 11);
             Jugador goleador = equipo.getJugadores()[marcarGol - 1]; 
             eventos.add(minutoActual + ": Gol del " + equipo.getNombre() + " (" + goleador.getNombre() + " " + goleador.getApellido() + ")");
@@ -166,7 +166,7 @@ public class Partido
                 eventos.add(minutoActual + ": Asistencia del " + equipo.getNombre() + " (" + asistente.getNombre() + " " + asistente.getApellido() + ")");
             }
         }
-        return golesEquipo;
+        return golesEquipo2;
     }
 
     public void simularTarjetas(int minutoActual, int[] tarjetasAmarillasLocal, int[] tarjetasRojasLocal,int[] tarjetasAmarillasVisitante, int[] tarjetasRojasVisitante, List<String> eventos, Random ran) 
