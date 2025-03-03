@@ -20,11 +20,18 @@ public class Liga
     private ArrayList<Jornada> jornadas = new ArrayList<>();
 
 
-    public Liga(String[] equipos)
+    public Liga(String[] equipos, boolean mundial)
     {
         Faker fakerEs = new Faker(new Locale("es"));
-        this.nombre = fakerEs.pokemon().name();
-        this.equipos = this.crearArrayEquipos(equipos);
+        if (mundial)
+        {
+            this.nombre = "MUNDIAL";
+        }
+        else
+        {
+            this.nombre = fakerEs.pokemon().name();
+        }
+        this.equipos = this.crearArrayEquipos(equipos, mundial);
         this.jornadas = this.generarCalendario(this.equipos);
 
     }
@@ -114,7 +121,7 @@ public class Liga
 				}
 				jornadas.add(jornada);
 				numJornada++;
-				Collections.rotate(equipos.subList(1, 20), 1);
+				Collections.rotate(equipos.subList(1, equipos.size()), 1);
 			}
 		}
 
@@ -144,43 +151,52 @@ public class Liga
 
         int i = 1;
 
-System.out.println(PrintTexto.BLUE + "---------------------------");
-System.out.println(PrintTexto.RED + "Clasificación Jornada " + numJornada + " Liga " + this.nombre.toUpperCase());
-System.out.println(PrintTexto.YELLOW + "----- EQUIPOS ---------------- PT--------------");
+        System.out.println(PrintTexto.BLUE + "---------------------------");
+        System.out.println(PrintTexto.RED + "Clasificación Jornada " + numJornada + " Liga " + this.nombre.toUpperCase());
+        System.out.println(PrintTexto.YELLOW + "----- EQUIPOS ---------------- PT--------------");
 
-for (Equipo equipo : this.equipos) {
-    System.out.println(PrintTexto.CYAN + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos());
-    i++; 
-}
+        for (Equipo equipo : this.equipos) 
+        {
+            System.out.println(PrintTexto.CYAN + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos());
+            i++; 
+        }
 
-System.out.println(PrintTexto.BLUE + "---------------------------");
-}
+        System.out.println(PrintTexto.BLUE + "---------------------------");
+    }
         
 
-public void verEquipos(ArrayList<Equipo> equipos) {
-    System.out.println(PrintTexto.BLUE + "-----------------------" );
-    System.out.println(PrintTexto.BLUE + "-----------------------");
-    System.out.println(PrintTexto.YELLOW + "Equipos de la liga " );
-    System.out.println(PrintTexto.BLUE + "-----------------------" );
-    System.out.println(PrintTexto.BLUE + "-----------------------" );
+    public void verEquipos(ArrayList<Equipo> equipos) 
+    {
+        System.out.println(PrintTexto.BLUE + "-----------------------" );
+        System.out.println(PrintTexto.BLUE + "-----------------------");
+        System.out.println(PrintTexto.YELLOW + "Equipos de la liga " );
+        System.out.println(PrintTexto.BLUE + "-----------------------" );
+        System.out.println(PrintTexto.BLUE + "-----------------------" );
 
-    for (Equipo equipo : equipos) {
-        System.out.println(PrintTexto.GREEN + "-----------------------" );
-        System.out.println(PrintTexto.CYAN + equipo.getNombre() + PrintTexto.RESET + PrintTexto.RED + " media del equipo: " + equipo.getMediaStats());
+        for (Equipo equipo : equipos) {
+            System.out.println(PrintTexto.GREEN + "-----------------------" );
+            System.out.println(PrintTexto.CYAN + equipo.getNombre() + PrintTexto.RESET + PrintTexto.RED + " media del equipo: " + equipo.getMediaStats());
+        }
     }
-}
 
-    public  ArrayList<Equipo>  crearArrayEquipos(String[] equipos)
+    public  ArrayList<Equipo>  crearArrayEquipos(String[] equipos, boolean mundial)
 	{
         Equipo equipoAux = new Equipo();
         ArrayList<Equipo> equiposLiga = new ArrayList<>();
+        int i = 0;
 
 		for (String equipo: equipos)
 		{
-            equiposLiga.add(equipoAux.crearEquipo(equipo));
+            if (mundial)
+            {
+                i++;
+            }
+            equiposLiga.add(equipoAux.crearEquipo(equipo, i));
+            
 		}
 		return equiposLiga;
 	}
+
     public  void menuVariasLigas(int numJornada) 
     {
         int opcion;
@@ -283,5 +299,53 @@ public void verEquipos(ArrayList<Equipo> equipos) {
                     break ;
             }
         } while (opcion!=5);
-}
+    }
+
+    public int eliminatiroaMundial(int index1, int index2, int numPuntos, Partido partidoAux)
+    {
+        int equipoGanador;
+        equipoGanador = 0;
+        if (numPuntos == (this.equipos.get(index1).getPuntos()))
+        {
+            System.out.println("Gano Equipo " + index2);
+            equipoGanador = index2;
+        }
+        else if ((numPuntos + 1) == this.equipos.get(index1).getPuntos())
+        {
+            System.out.println("Hubo empate, ir a penaltis");
+            //Funcion penaltis
+            equipoGanador = partidoAux.simularPenaltis(index1, index2);
+        }
+        else
+        {
+            System.out.println("Gano equipo " + index1);
+            equipoGanador = index1;
+        }
+        return equipoGanador;
+    }
+    public void eliminatorias()
+    {
+        int numPuntos1 = this.equipos.get(0).getPuntos();
+        int numPuntos2 = this.equipos.get(1).getPuntos();
+        int[] indexGanadores = new int[2];
+        Partido partidoaux;
+
+        System.out.println("prueba a ver que equipos juegan y si esta bien:");
+        System.out.println("SEMIFINALES");
+        System.out.println("Equipo 1: " +this.equipos.get(0).getNombre() +" vs Equipo 4: " + this.equipos.get(3).getNombre());
+        partidoaux = new Partido(this.equipos.get(0), this.equipos.get(3));
+        partidoaux.simularPartido();
+        indexGanadores[0] = eliminatiroaMundial(0,3, numPuntos1, partidoaux);
+        System.out.println("SEMIFINALES");
+        System.out.println("Equipo 2: " +this.equipos.get(1).getNombre() +" vs Equipo 3: " + this.equipos.get(2).getNombre());
+        partidoaux = new Partido(this.equipos.get(1), this.equipos.get(2));
+        partidoaux.simularPartido();
+        indexGanadores[1] = eliminatiroaMundial(1,2, numPuntos1, partidoaux);
+        System.out.println("FINAL");
+        System.out.println("Equipo : " +this.equipos.get(indexGanadores[0]).getNombre() +" vs Equipo : " + this.equipos.get(indexGanadores[1]).getNombre());
+        partidoaux = new Partido(this.equipos.get(indexGanadores[0]), this.equipos.get(indexGanadores[1]));
+        partidoaux.simularPartido();
+        numPuntos1 = this.equipos.get(indexGanadores[0]).getPuntos();
+        indexGanadores[0] = eliminatiroaMundial(indexGanadores[0], indexGanadores[1], numPuntos1, partidoaux);
+    }
 }

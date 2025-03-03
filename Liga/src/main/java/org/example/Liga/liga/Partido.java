@@ -105,6 +105,70 @@ public class Partido
         
     }
 
+    public int simularPenaltis(int index1, int index2)
+    {
+        int goles1 = 0;
+        int dado;
+        int goles2 = 0;
+        Random ran = new Random();
+        System.out.println("------------------");
+        System.out.println("EMPIEZAN LOS PENALTIS");
+        while (goles1 < 5 && goles2 < 5)
+        {
+            dado = ran.nextInt(10);
+            if (dado <=5)
+            {
+                System.out.println("------------------");
+                System.out.println("GOOOOOOOOL DE " + this.equipoLocal.getNombre());
+                System.out.println("------------------");
+
+                goles1++;
+            }
+            else
+            {
+                System.out.println("----------------");
+                System.out.println("FALLO DE " + this.equipoLocal.getNombre());
+                System.out.println("------------------");
+
+            }
+            System.out.println("---------------------");
+            System.out.println(this.equipoLocal.getNombre() + " " + goles1 + " - " + goles2 + " " + this.equipoVisitante.getNombre());
+            dado = ran.nextInt(10);
+            if (goles1 !=5)
+            {
+                if (dado <=5)
+                {
+                    System.out.println("------------------");
+                    System.out.println("GOOOOOOOOL DE " + this.equipoVisitante.getNombre());
+                    System.out.println("------------------");
+
+                    goles2++;
+                }
+                else
+                {
+                    System.out.println("----------------");
+                    System.out.println("FALLO DE " + this.equipoVisitante.getNombre());
+                    System.out.println("------------------");
+
+                }
+                System.out.println(this.equipoLocal.getNombre() + " " + goles1 + " - " + goles2 + " " + this.equipoVisitante.getNombre());
+            }
+        }
+        System.out.println("-------------------------");
+        if (goles1 == 5)
+        {
+            System.out.println("EL GANADOR ES: " + this.equipoLocal.getNombre());
+            return (index1);
+
+        }
+        else
+        {
+            System.out.println("EL GANADOR ES: " + this.equipoVisitante.getNombre());
+            return (index2);
+        }
+        
+    }
+
     public int simularGolMayorMedia(int minutoActual, int golesEquipo, Equipo equipo, List<String> eventos, Random ran, boolean esLocal) 
     {
         int dado = ran.nextInt(10);

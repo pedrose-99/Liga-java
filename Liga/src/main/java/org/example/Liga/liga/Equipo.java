@@ -183,7 +183,7 @@ public class Equipo
         return true;
     }
 
-	public Jugador crearJugador(Posicion posicion)
+	public Jugador crearJugador(Posicion posicion, int numero)
 	{
 		Random ran = new Random();
 		String firstName;
@@ -198,8 +198,14 @@ public class Equipo
 		int dado1;
 		Jugador jugador;
 		Continente continente;
-
-		dado1 = ran.nextInt(6);
+        if (numero == 0)
+        {
+		    dado1 = ran.nextInt(6);
+        }
+        else
+        {
+            dado1 = numero;
+        }
 		switch (dado1) {
 			case 1:
 				firstName = fakerEs.name().firstName();
@@ -242,28 +248,28 @@ public class Equipo
 		return jugador;
 	}
 
-    public Equipo crearEquipo(String nombre)
+    public Equipo crearEquipo(String nombre, int numero)
 	{
 		int i;
 		Equipo equipoPrueba;
 		Jugador[] jugadores = new Jugador[11];
 
 		i = 0;
-		jugadores[i] = crearJugador(Posicion.PORTERO);
+		jugadores[i] = crearJugador(Posicion.PORTERO, numero);
 		i++;
 		while (i <= 4)
 		{
-			jugadores[i] = crearJugador(Posicion.DEFENSA);
+			jugadores[i] = crearJugador(Posicion.DEFENSA, numero);
 			i++;
 		}
 		while (i <= 7)
 		{
-			jugadores[i] = crearJugador(Posicion.MEDIOCAMPISTA);
+			jugadores[i] = crearJugador(Posicion.MEDIOCAMPISTA, numero);
 			i++;
 		}
 		while (i <= 10)
 		{
-			jugadores[i] = crearJugador(Posicion.DELANTERO);
+			jugadores[i] = crearJugador(Posicion.DELANTERO, numero);
 			i++;
 		}
 		equipoPrueba = new Equipo(nombre, jugadores);

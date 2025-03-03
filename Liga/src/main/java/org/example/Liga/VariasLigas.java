@@ -68,7 +68,7 @@ public class VariasLigas
 		numJornada = 0;
 		for (int i = 0; i < opcion; i++)
 		{
-			ligas.add(new Liga(generarEquipos()));
+			ligas.add(new Liga(generarEquipos(), false));
 		}
 
 		do {
