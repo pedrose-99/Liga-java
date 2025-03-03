@@ -6,7 +6,8 @@ import org.example.Liga.enumLiga.Posicion;
 public class Portero extends Jugador {
     private int paradas; // Número de paradas realizadas
 
-    public Portero(String nombre, String apellido, Continente continente, int stats, Posicion posicion) {
+    public Portero(String nombre, String apellido, Continente continente, int stats, Posicion posicion) 
+    {
         super(nombre, apellido, continente, stats, posicion);
         this.paradas = 0; // Inicializamos el número de paradas en 0
     }
@@ -18,7 +19,8 @@ public class Portero extends Jugador {
     }
 
     // Método para obtener el número total de paradas
-    public int getParadas() {
+    public int getParadas() 
+    {
         return paradas;
     }
 

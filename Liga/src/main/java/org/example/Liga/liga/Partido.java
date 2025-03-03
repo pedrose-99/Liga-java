@@ -216,6 +216,7 @@ public class Partido
             golesEquipo++;
             int marcarGol = ran.nextInt(1, 11);
             Jugador goleador = equipo.getJugadores()[marcarGol - 1]; 
+            equipo.getJugadores()[marcarGol-1].golNuevo();
             eventos.add(minutoActual + ": Gol del " + equipo.getNombre() + " (" + goleador.getNombre() + " " + goleador.getApellido() + ")");
             
             if (ran.nextInt(10) <= 7) 
@@ -226,7 +227,8 @@ public class Partido
                     darAsistencia = ran.nextInt(1, 11);
                 } 
                 while (darAsistencia == marcarGol);
-                Jugador asistente = equipo.getJugadores()[darAsistencia - 1]; 
+                Jugador asistente = equipo.getJugadores()[darAsistencia - 1];
+                equipo.getJugadores()[darAsistencia-1].asistencia(); 
                 eventos.add(minutoActual + ": Asistencia del " + equipo.getNombre() + " (" + asistente.getNombre() + " " + asistente.getApellido() + ")");
             }
         }
@@ -257,13 +259,15 @@ public class Partido
         if (tarjetasRojas[jugador] == 0) 
         {
             tarjetasAmarillas[jugador]++;
-            Jugador jugadorTarjeta = equipo.getJugadores()[jugador]; 
+            Jugador jugadorTarjeta = equipo.getJugadores()[jugador];
+            equipo.getJugadores()[jugadorTarjeta].amarilla();  
             eventos.add(minutoTarjeta + ": Tarjeta amarilla para " + equipo.getNombre() + " (" + jugadorTarjeta.getNombre() + " " + jugadorTarjeta.getApellido() + ")");
 
             
             if (tarjetasAmarillas[jugador] == 2) 
             {
                 tarjetasRojas[jugador] = 1;
+                equipo.getJugadores()[jugadorTarjeta].roja();  
                 eventos.add(minutoTarjeta + ": ¡Expulsión! Tarjeta roja para " + equipo.getNombre() + " (" + jugadorTarjeta.getNombre() + " " + jugadorTarjeta.getApellido() + ")");
 
             }

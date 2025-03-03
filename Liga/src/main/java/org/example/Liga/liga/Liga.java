@@ -10,6 +10,8 @@ import java.util.Scanner;
 
 import org.example.Liga.GestionNumero;
 import org.example.Liga.PrintTexto;
+import org.example.Liga.personas.Jugador;
+import org.example.Liga.personas.Portero;
 
 import com.github.javafaker.Faker;
 
@@ -77,6 +79,97 @@ public class Liga
     public void aniadirJornada(Jornada jornada)
     {
         this.jornadas.add(jornada);
+    }
+
+
+    public void maximoGoleador()
+    {
+        Jugador masGoles = null;
+        
+        for (Equipo equipo : this.equipos) 
+        {
+            for (Jugador jugador : equipo.getJugadores()) 
+            {
+                if (masGoles == null || jugador.getGoles() > masGoles.getGoles()) 
+                {
+                    masGoles = jugador;
+                }
+            }
+        }
+        System.out.println("Máximo goleador y pichichi de la liga: " + masGoles.getNombre() + " con " + masGoles.getGoles() + " goles.");
+    }
+    public void maximoAsistente()
+    {
+        Jugador masAsistencias = null;
+        
+        for (Equipo equipo : this.equipos) 
+        {
+            for (Jugador jugador : equipo.getJugadores()) 
+            {
+                if (masAsistencias == null || jugador.getAsistencias() > masAsistencias.getAsistencias()) 
+                {
+                    masAsistencias = jugador;
+                }
+            }
+        }
+        System.out.println("Máximo asistente de la liga: " + masAsistencias.getNombre() + " con " + masAsistencias.getAsistencias() + " asistencias.");
+    }
+    public void masRojas()
+    {
+        Jugador masExpulsado = null;
+        
+        for (Equipo equipo : this.equipos) 
+        {
+            for (Jugador jugador : equipo.getJugadores()) 
+            {
+                if (masExpulsado == null || jugador.getTarjetasRojas() > masExpulsado.getTarjetasRojas()) 
+                {
+                    masExpulsado = jugador;
+                }
+            }
+        }
+        System.out.println("Máximo expulsado y más guarro de la liga: " + masExpulsado.getNombre() + " con " + masExpulsado.getTarjetasRojas() + " tarjetas rojas.");
+    }
+    public void masAmarillas()
+    {
+        Jugador masSancionado = null;
+        
+        for (Equipo equipo : this.equipos) 
+        {
+            for (Jugador jugador : equipo.getJugadores()) 
+            {
+                if (masSancionado == null || jugador.getTarjetasAmarillas() > masSancionado.getTarjetasAmarillas()) 
+                {
+                    masSancionado = jugador;
+                }
+            }
+        }
+        System.out.println("Más sancionado de la liga: " + masSancionado.getNombre() + " con " + masSancionado.getTarjetasAmarillas() + " tarjetas amarillas.");
+    }
+    public void maximasParadas()
+    {
+        Portero masParadas = null;
+        
+        for (Equipo equipo : this.equipos) 
+        {
+            for (Portero portero : equipo.getPortero()) 
+            {
+                if (masParadas == null || portero.getParadas()() > masParadas.getParadas()) 
+                {
+                    masParadas = portero;
+                }
+            }
+        }
+        System.out.println("Más paradas de la liga y trofeo zamora: " + masParadas.getNombre() + " con " + masParadas.getParadas() + " paradas.");
+    }
+
+    public void calcularMaximos() 
+    {
+        maximoGoleador();
+        maximoAsistente();
+        maximasParadas();
+        masAmarillas();
+        masRojas();
     }
 
 	public void imprimirJornadas(ArrayList<Jornada> jornadas)
