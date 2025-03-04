@@ -348,4 +348,5 @@ public class Liga
         numPuntos1 = this.equipos.get(indexGanadores[0]).getPuntos();
         indexGanadores[0] = eliminatiroaMundial(indexGanadores[0], indexGanadores[1], numPuntos1, partidoaux);
     }
+
 }
