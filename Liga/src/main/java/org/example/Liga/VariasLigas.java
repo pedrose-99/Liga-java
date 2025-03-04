@@ -39,13 +39,13 @@ public class VariasLigas
 
 	public static void opcionesVariasLigas()
 	{
-		System.out.println("\nBIENVENIDO AL SIMULADOR DE LA XTART LEAGUE");
-        System.out.println("\nSELECCIONA UNA OPCIÓN PARA COMENZAR TU AVENTURA Y DISFRUTAR DE NUESTRA LIGA MIXTA");
-        System.out.println("1. Ver clasificaciones");
-        System.out.println("2. Simular Jornadas");
-        System.out.println("3. Ver equipos");
-		System.out.println("4. Salir");
-        System.out.print("Elige una opción: ");
+		System.out.println(PrintTexto.RESET + "\nBIENVENIDO AL SIMULADOR DE LA XTART LEAGUE");
+        System.out.println(PrintTexto.GREEN + "\nSELECCIONA UNA OPCIÓN PARA COMENZAR TU AVENTURA Y DISFRUTAR DE NUESTRA LIGA MIXTA");
+        System.out.println(PrintTexto.YELLOW + "1. Ver clasificaciones");
+        System.out.println(PrintTexto.PURPLE + "2. Simular Jornadas");
+        System.out.println(PrintTexto.RED + "3. Ver equipos");
+		System.out.println(PrintTexto.BLUE + "4. Salir");
+        System.out.print(PrintTexto.RESET + "Elige una opción: ");
 	}
 
 

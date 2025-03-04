@@ -229,7 +229,7 @@ public class Liga
         System.out.println(PrintTexto.GREEN + "2. Simular Jornada");
         System.out.println(PrintTexto.PURPLE + "3. Ver Jornadas");
         System.out.println(PrintTexto.RED + "4. Ver equipos");
-        System.out.println(PrintTexto.BOLD + "5. Salir");
+        System.out.println(PrintTexto.BLUE + "5. Salir");
         System.out.print(PrintTexto.RESET + "Elige una opción: ");
     }
 

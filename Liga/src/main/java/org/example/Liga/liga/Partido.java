@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
+import org.example.Liga.PrintTexto;
 import org.example.Liga.personas.Jugador;
 
 public class Partido
@@ -318,9 +319,9 @@ public class Partido
     }
     public void mostrarParadasPorteros() 
     {
-        System.out.println("Resumen de porteros:");
-        System.out.println("Portero de " + equipoLocal.getNombre() + " realizó " + paradasPorteroLocal + " paradas.");
-        System.out.println("Portero de " + equipoVisitante.getNombre() + " realizó " + paradasPorteroVisitante + " paradas.");
+        System.out.println(PrintTexto.GREEN + "Resumen de porteros:");
+        System.out.println(PrintTexto.RED + "Portero de " + equipoLocal.getNombre() + " realizó " + paradasPorteroLocal + " paradas.");
+        System.out.println(PrintTexto.BLUE + "Portero de " + equipoVisitante.getNombre() + " realizó " + paradasPorteroVisitante + " paradas.");
     }
 
     public void actualizarPuntos(int golesEquipo1, int golesEquipo2) 
