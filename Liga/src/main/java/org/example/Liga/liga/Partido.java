@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
+import org.example.Liga.PrintTexto;
 import org.example.Liga.personas.Jugador;
 
 public class Partido
@@ -94,7 +95,7 @@ public class Partido
                 golesEquipo2 = simularGolMayorMedia(minutoActual, golesEquipo2, this.equipoLocal, eventos, ran, false);
                 golesEquipo1 = simularGolMenorMedia(minutoActual, golesEquipo1, this.equipoVisitante, eventos, ran, true);
             }
-            simularTarjetas(minutoActual, tarjetasAmarillasLocal, tarjetasRojasLocal, tarjetasAmarillasVisitante, tarjetasRojasVisitante, eventos, ran);
+            //simularTarjetas(minutoActual, tarjetasAmarillasLocal, tarjetasRojasLocal, tarjetasAmarillasVisitante, tarjetasRojasVisitante, eventos, ran);
         }
         
         mostrarEventos(eventos);
@@ -216,6 +217,7 @@ public class Partido
             golesEquipo++;
             int marcarGol = ran.nextInt(1, 11);
             Jugador goleador = equipo.getJugadores()[marcarGol - 1]; 
+            equipo.getJugadores()[marcarGol-1].golNuevo();
             eventos.add(minutoActual + ": Gol del " + equipo.getNombre() + " (" + goleador.getNombre() + " " + goleador.getApellido() + ")");
             
             if (ran.nextInt(10) <= 7) 
@@ -226,7 +228,8 @@ public class Partido
                     darAsistencia = ran.nextInt(1, 11);
                 } 
                 while (darAsistencia == marcarGol);
-                Jugador asistente = equipo.getJugadores()[darAsistencia - 1]; 
+                Jugador asistente = equipo.getJugadores()[darAsistencia - 1];
+                equipo.getJugadores()[darAsistencia-1].asistencia(); 
                 eventos.add(minutoActual + ": Asistencia del " + equipo.getNombre() + " (" + asistente.getNombre() + " " + asistente.getApellido() + ")");
             }
         }
@@ -257,14 +260,16 @@ public class Partido
         if (tarjetasRojas[jugador] == 0) 
         {
             tarjetasAmarillas[jugador]++;
-            Jugador jugadorTarjeta = equipo.getJugadores()[jugador]; 
-            eventos.add(minutoTarjeta + ": Tarjeta amarilla para " + equipo.getNombre() + " (" + jugadorTarjeta.getNombre() + " " + jugadorTarjeta.getApellido() + ")");
+            Jugador jugadorTarjeta = equipo.getJugadores()[jugador];
+            equipo.getJugadores()[jugador].amarilla();  
+            eventos.add( PrintTexto.YELLOW + minutoTarjeta + ": Tarjeta amarilla para " + equipo.getNombre() + " (" + jugadorTarjeta.getNombre() + " " + jugadorTarjeta.getApellido() + ")");
 
             
             if (tarjetasAmarillas[jugador] == 2) 
             {
                 tarjetasRojas[jugador] = 1;
-                eventos.add(minutoTarjeta + ": ¡Expulsión! Tarjeta roja para " + equipo.getNombre() + " (" + jugadorTarjeta.getNombre() + " " + jugadorTarjeta.getApellido() + ")");
+                equipo.getJugadores()[jugador].roja();  
+                eventos.add(PrintTexto.RED + minutoTarjeta + ": ¡Expulsión! Tarjeta roja para " + equipo.getNombre() + " (" + jugadorTarjeta.getNombre() + " " + jugadorTarjeta.getApellido() + ")");
 
             }
         }
@@ -295,7 +300,7 @@ public class Partido
 
     public void mostrarAmonestados(int[] tarjetasAmarillasLocal, int[] tarjetasRojasLocal,int[] tarjetasAmarillasVisitante, int[] tarjetasRojasVisitante) 
     {
-        System.out.println("Jugadores amonestados:");
+        System.out.println(PrintTexto.RESET + "Jugadores amonestados:");
         for (int i = 0; i < 11; i++) 
         {
             if (tarjetasAmarillasLocal[i] > 0 || tarjetasRojasLocal[i] > 0) 
@@ -314,9 +319,9 @@ public class Partido
     }
     public void mostrarParadasPorteros() 
     {
-        System.out.println("Resumen de porteros:");
-        System.out.println("Portero de " + equipoLocal.getNombre() + " realizó " + paradasPorteroLocal + " paradas.");
-        System.out.println("Portero de " + equipoVisitante.getNombre() + " realizó " + paradasPorteroVisitante + " paradas.");
+        System.out.println(PrintTexto.GREEN + "Resumen de porteros:");
+        System.out.println(PrintTexto.RED + "Portero de " + equipoLocal.getNombre() + " realizó " + paradasPorteroLocal + " paradas.");
+        System.out.println(PrintTexto.BLUE + "Portero de " + equipoVisitante.getNombre() + " realizó " + paradasPorteroVisitante + " paradas.");
     }
 
     public void actualizarPuntos(int golesEquipo1, int golesEquipo2) 

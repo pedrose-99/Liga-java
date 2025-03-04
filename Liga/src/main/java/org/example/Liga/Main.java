@@ -15,9 +15,9 @@ public class Main {
         System.out.println(PrintTexto.GREEN + "\nSELECCIONA UNA OPCIÓN PARA COMENZAR TU AVENTURA Y DISFRUTAR DE NUESTRA LIGA MIXTA");
         System.out.println(PrintTexto.YELLOW + "1. Jugar con una liga");
         System.out.println(PrintTexto.BLUE + "2. Jugar con varias ligas");
-        System.out.println("3. Jugar mundial");
+        System.out.println(PrintTexto.RED + "3. Jugar mundial");
         System.out.println(PrintTexto.PURPLE + "4. Salir");
-        System.out.print(PrintTexto.CYAN + "Elige una opción: ");
+        System.out.print(PrintTexto.RESET + "Elige una opción: ");
     }
 
     public static void main(String[] args) 

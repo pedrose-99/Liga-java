@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.Random;
 
+import org.example.Liga.PrintTexto;
 import org.example.Liga.enumLiga.Continente;
 import org.example.Liga.enumLiga.Posicion;
 import org.example.Liga.personas.Jugador;
@@ -50,12 +51,12 @@ public class Equipo
     
     public void marcarGoles(int jugadorMarca)
     {
-        System.out.println(this.jugadores[jugadorMarca].getNombre() + " marca un gol");
+        System.out.println(PrintTexto.GREEN + this.jugadores[jugadorMarca].getNombre() + " marca un gol");
         this.jugadores[jugadorMarca].golNuevo();
     }
     public void darAsistencia (int jugadorAsiste)
     {
-        System.out.println(this.jugadores[jugadorAsiste].getNombre() + " ha dado la asistencia para el gol");
+        System.out.println(PrintTexto.GREEN + this.jugadores[jugadorAsiste].getNombre() + " ha dado la asistencia para el gol");
         this.jugadores[jugadorAsiste].asistencia();
     }
 
@@ -95,9 +96,12 @@ public class Equipo
     {
         return diferenciaGoles;
     }
+
+    
     public void setDiferenciaGoles(int diferenciaGoles) 
     {
         this.diferenciaGoles = diferenciaGoles;
+
     }
     public int getMediaStats() 
     {

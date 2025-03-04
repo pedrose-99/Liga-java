@@ -10,6 +10,8 @@ import java.util.Scanner;
 
 import org.example.Liga.GestionNumero;
 import org.example.Liga.PrintTexto;
+import org.example.Liga.personas.Jugador;
+import org.example.Liga.personas.Portero;
 
 import com.github.javafaker.Faker;
 
@@ -79,17 +81,108 @@ public class Liga
         this.jornadas.add(jornada);
     }
 
+
+    public void maximoGoleador()
+    {
+        Jugador masGoles = null;
+        
+        for (Equipo equipo : this.equipos) 
+        {
+            for (Jugador jugador : equipo.getJugadores()) 
+            {
+                if (masGoles == null || jugador.getGoles() > masGoles.getGoles()) 
+                {
+                    masGoles = jugador;
+                }
+            }
+        }
+        System.out.println("Máximo goleador y pichichi de la liga: " + masGoles.getNombre() + " con " + masGoles.getGoles() + " goles.");
+    }
+    public void maximoAsistente()
+    {
+        Jugador masAsistencias = null;
+        
+        for (Equipo equipo : this.equipos) 
+        {
+            for (Jugador jugador : equipo.getJugadores()) 
+            {
+                if (masAsistencias == null || jugador.getAsistencias() > masAsistencias.getAsistencias()) 
+                {
+                    masAsistencias = jugador;
+                }
+            }
+        }
+        System.out.println("Máximo asistente de la liga: " + masAsistencias.getNombre() + " con " + masAsistencias.getAsistencias() + " asistencias.");
+    }
+    public void masRojas()
+    {
+        Jugador masExpulsado = null;
+        
+        for (Equipo equipo : this.equipos) 
+        {
+            for (Jugador jugador : equipo.getJugadores()) 
+            {
+                if (masExpulsado == null || jugador.getTarjetasRojas() > masExpulsado.getTarjetasRojas()) 
+                {
+                    masExpulsado = jugador;
+                }
+            }
+        }
+        System.out.println("Máximo expulsado y más guarro de la liga: " + masExpulsado.getNombre() + " con " + masExpulsado.getTarjetasRojas() + " tarjetas rojas.");
+    }
+    public void masAmarillas()
+    {
+        Jugador masSancionado = null;
+        
+        for (Equipo equipo : this.equipos) 
+        {
+            for (Jugador jugador : equipo.getJugadores()) 
+            {
+                if (masSancionado == null || jugador.getTarjetasAmarillas() > masSancionado.getTarjetasAmarillas()) 
+                {
+                    masSancionado = jugador;
+                }
+            }
+        }
+        System.out.println("Más sancionado de la liga: " + masSancionado.getNombre() + " con " + masSancionado.getTarjetasAmarillas() + " tarjetas amarillas.");
+    }
+    public void maximasParadas()
+    {
+        Portero masParadas = null;
+        
+        for (Equipo equipo : this.equipos) 
+        {
+            for (Portero portero : equipo.getPortero()) 
+            {
+                if (masParadas == null || portero.getParadas()() > masParadas.getParadas()) 
+                {
+                    masParadas = portero;
+                }
+            }
+        }
+        System.out.println("Más paradas de la liga y trofeo zamora: " + masParadas.getNombre() + " con " + masParadas.getParadas() + " paradas.");
+    }
+
+    public void calcularMaximos() 
+    {
+        maximoGoleador();
+        maximoAsistente();
+        maximasParadas();
+        masAmarillas();
+        masRojas();
+    }
+
 	public void imprimirJornadas(ArrayList<Jornada> jornadas)
 	{
 		for (Jornada jornadaPrueba : jornadas)
 		{
-			System.out.println("--------------------------------------------------------------");
-			System.out.println("JORNADA " + jornadaPrueba.getNumJornada());
+			System.out.println(PrintTexto.BLUE + "--------------------------------------------------------------");
+			System.out.println(PrintTexto.RED + "JORNADA " + jornadaPrueba.getNumJornada());
 			for (Partido partidoPrueba : jornadaPrueba.getPartidos())
 			{
-				System.out.println(partidoPrueba.getEquipoLocal().getNombre() + " vs " + partidoPrueba.getEquipoVisitante().getNombre());
+				System.out.println(PrintTexto.GREEN +partidoPrueba.getEquipoLocal().getNombre() + " vs " + partidoPrueba.getEquipoVisitante().getNombre());
 			}
-			System.out.println("--------------------------------------------------------------");
+			System.out.println(PrintTexto.CYAN + "--------------------------------------------------------------");
 		}
 	}
 
@@ -130,14 +223,14 @@ public class Liga
 
     public void BienvenidoAlSimulador() //Esto en un bucle para ver que has elegido una de las 4 opciones.
     {
-        System.out.println("\nBIENVENIDO AL SIMULADOR DE LA XTART LEAGUE");
-        System.out.println("\nSELECCIONA UNA OPCIÓN PARA COMENZAR TU AVENTURA Y DISFRUTAR DE NUESTRA LIGA " + this.nombre.toUpperCase());
-        System.out.println("1. Ver Clasificación");
-        System.out.println("2. Simular Jornada");
-        System.out.println("3. Ver Jornadas");
-        System.out.println("4. Ver equipos");
-        System.out.println("5. Salir");
-        System.out.print("Elige una opción: ");
+        System.out.println(PrintTexto.BOLD + PrintTexto.WHITE + "\nBIENVENIDO AL SIMULADOR DE LA XTART LEAGUE");
+        System.out.println( PrintTexto.YELLOW + "\nSELECCIONA UNA OPCIÓN PARA COMENZAR TU AVENTURA Y DISFRUTAR DE NUESTRA LIGA " + this.nombre.toUpperCase());
+        System.out.println(PrintTexto.CYAN + "1. Ver Clasificación");
+        System.out.println(PrintTexto.GREEN + "2. Simular Jornada");
+        System.out.println(PrintTexto.PURPLE + "3. Ver Jornadas");
+        System.out.println(PrintTexto.RED + "4. Ver equipos");
+        System.out.println(PrintTexto.BLUE + "5. Salir");
+        System.out.print(PrintTexto.RESET + "Elige una opción: ");
     }
 
     public  void verClasificacion(int numJornada)
@@ -155,13 +248,24 @@ public class Liga
         System.out.println(PrintTexto.RED + "Clasificación Jornada " + numJornada + " Liga " + this.nombre.toUpperCase());
         System.out.println(PrintTexto.YELLOW + "----- EQUIPOS ---------------- PT--------------");
 
-        for (Equipo equipo : this.equipos) 
-        {
-            System.out.println(PrintTexto.CYAN + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos());
-            i++; 
+        for (Equipo equipo : this.equipos) {
+            int golesAfavor = equipo.getGolesAfavor();
+            int golesEnContra = equipo.getGolesEnContra();
+            int diferenciaGoles = golesAfavor - golesEnContra;
+        
+            if (i <= 4) {
+                System.out.println(PrintTexto.BLUE + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + " Pts, GF: " + golesAfavor + ", GC: " + golesEnContra + ", DG: " + diferenciaGoles + PrintTexto.RESET);
+            } else if (i <= 6) {
+                System.out.println(PrintTexto.YELLOW + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + " Pts, GF: " + golesAfavor + ", GC: " + golesEnContra + ", DG: " + diferenciaGoles + PrintTexto.RESET);
+            } else if (i > this.equipos.size() - 3) {
+                System.out.println(PrintTexto.RED + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + " Pts, GF: " + golesAfavor + ", GC: " + golesEnContra + ", DG: " + diferenciaGoles + PrintTexto.RESET);
+            } else {
+                System.out.println(PrintTexto.WHITE + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + " Pts, GF: " + golesAfavor + ", GC: " + golesEnContra + ", DG: " + diferenciaGoles + PrintTexto.RESET);
+            }
+            i++;
         }
 
-        System.out.println(PrintTexto.BLUE + "---------------------------");
+        System.out.println(PrintTexto.RESET + "---------------------------");
     }
         
 
@@ -211,6 +315,11 @@ public class Liga
                 System.out.println("La liga "+ this.nombre.toUpperCase() +" ha acabado.");
                 equiposClasificacion = this.getEquipos();
                 verClasificacion( numJornada);
+                maximoGoleador();
+                maximoAsistente();
+                maximasParadas();
+                masAmarillas();
+                masRojas();
                 System.out.println("-----------------------");
             }
             else
@@ -241,7 +350,7 @@ public class Liga
                     //Salir
                     break ;
                 default:
-                    System.out.println("Opción no válida, intenta de nuevo.");
+                    System.out.println(PrintTexto.RED + "Opción no válida, intenta de nuevo.");
                     break ;
             }
         } while (opcion != 5 && opcion != 2);
@@ -295,7 +404,7 @@ public class Liga
                     //Salir
                     break ;
                 default:
-                    System.out.println("Opción no válida, intenta de nuevo.");
+                    System.out.println(PrintTexto.RED + "Opción no válida, intenta de nuevo.");
                     break ;
             }
         } while (opcion!=5);

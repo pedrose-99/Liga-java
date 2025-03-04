@@ -11,7 +11,7 @@ public class Jugador extends Persona
     private int tarjetasAmarillas;
     private int tarjetasRojas;
     private int stats;
-//Crear portero que va a ser una clase heredada de jugador con un nuevo aributo de numero de parads. Meter paradas++ en partido.
+    private int paradas = 0;
 
 
     public Jugador(String nombre, String apellido, Continente continente, int stats, Posicion posicion)
@@ -84,6 +84,15 @@ public class Jugador extends Persona
     {
         this.stats = stats;
     }
+    public int getAsistencias() 
+    {
+        return asistencias;
+    }
+
+    public void setAsistencias(int asistencias) 
+    {
+        this.asistencias = asistencias;
+    }
 
     public void golNuevo()
     {
@@ -93,7 +102,19 @@ public class Jugador extends Persona
     {
         this.asistencias ++;
     }
+    public void amarilla()
+    {
+        this.tarjetasAmarillas ++;
+    }
+    public void roja()
+    {
+        this.tarjetasRojas ++;
+    }
 
+    public void parada()
+    {
+        this.paradas++;
+    }
     @Override
     public String toString() {
         return "Jugador [nombre= " + super.getNombre() + " apellido= " + super.getApellido() + " continente= " + super.getContinente() +" goles=" + goles + ", posicion=" + posicion + ", tarjetasAmarillas=" + tarjetasAmarillas
@@ -121,5 +142,13 @@ public class Jugador extends Persona
             return false;
         return true;
     }
-    
+
+    public int getParadas() {
+        return paradas;
+    }
+
+    public void setParadas(int paradas) {
+        this.paradas = paradas;
+    }
+
 }
