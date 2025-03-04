@@ -248,13 +248,20 @@ public class Liga
         System.out.println(PrintTexto.RED + "Clasificación Jornada " + numJornada + " Liga " + this.nombre.toUpperCase());
         System.out.println(PrintTexto.YELLOW + "----- EQUIPOS ---------------- PT--------------");
 
-        for (Equipo equipo : this.equipos) 
-        {
-            System.out.println(PrintTexto.CYAN + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos());
-            i++; 
+        for (Equipo equipo : this.equipos) {
+            if (i <= 4) {
+                System.out.println(PrintTexto.BLUE + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + PrintTexto.RESET);
+            } else if (i <= 6) {
+                System.out.println(PrintTexto.YELLOW + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + PrintTexto.RESET);
+            } else if (i > this.equipos.size() - 3) {
+                System.out.println(PrintTexto.RED + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + PrintTexto.RESET);
+            } else {
+                System.out.println(PrintTexto.WHITE + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + PrintTexto.RESET);
+            }
+            i++;
         }
 
-        System.out.println(PrintTexto.BLUE + "---------------------------");
+        System.out.println(PrintTexto.RESET + "---------------------------");
     }
         
 
@@ -304,6 +311,11 @@ public class Liga
                 System.out.println("La liga "+ this.nombre.toUpperCase() +" ha acabado.");
                 equiposClasificacion = this.getEquipos();
                 verClasificacion( numJornada);
+                maximoGoleador();
+                maximoAsistente();
+                maximasParadas();
+                masAmarillas();
+                masRojas();
                 System.out.println("-----------------------");
             }
             else
@@ -334,7 +346,7 @@ public class Liga
                     //Salir
                     break ;
                 default:
-                    System.out.println("Opción no válida, intenta de nuevo.");
+                    System.out.println(PrintTexto.RED + "Opción no válida, intenta de nuevo.");
                     break ;
             }
         } while (opcion != 5 && opcion != 2);
@@ -388,7 +400,7 @@ public class Liga
                     //Salir
                     break ;
                 default:
-                    System.out.println("Opción no válida, intenta de nuevo.");
+                    System.out.println(PrintTexto.RED + "Opción no válida, intenta de nuevo.");
                     break ;
             }
         } while (opcion!=5);

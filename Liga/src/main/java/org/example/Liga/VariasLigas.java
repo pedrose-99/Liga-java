@@ -93,7 +93,7 @@ public class VariasLigas
 					//Salir
                     break ;
                 default:
-                    System.out.println("Opción no válida, intenta de nuevo.");
+                    System.out.println(PrintTexto.RED + "Opción no válida, intenta de nuevo.");
                     break ;
             }
         } while (opcion != 4);

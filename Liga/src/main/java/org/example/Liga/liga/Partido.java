@@ -262,14 +262,14 @@ public class Partido
             tarjetasAmarillas[jugador]++;
             Jugador jugadorTarjeta = equipo.getJugadores()[jugador];
             equipo.getJugadores()[jugadorTarjeta].amarilla();  
-            eventos.add(minutoTarjeta + ": Tarjeta amarilla para " + equipo.getNombre() + " (" + jugadorTarjeta.getNombre() + " " + jugadorTarjeta.getApellido() + ")");
+            eventos.add( PrintTexto.YELLOW + minutoTarjeta + ": Tarjeta amarilla para " + equipo.getNombre() + " (" + jugadorTarjeta.getNombre() + " " + jugadorTarjeta.getApellido() + ")");
 
             
             if (tarjetasAmarillas[jugador] == 2) 
             {
                 tarjetasRojas[jugador] = 1;
                 equipo.getJugadores()[jugadorTarjeta].roja();  
-                eventos.add(minutoTarjeta + ": ¡Expulsión! Tarjeta roja para " + equipo.getNombre() + " (" + jugadorTarjeta.getNombre() + " " + jugadorTarjeta.getApellido() + ")");
+                eventos.add(PrintTexto.RED + minutoTarjeta + ": ¡Expulsión! Tarjeta roja para " + equipo.getNombre() + " (" + jugadorTarjeta.getNombre() + " " + jugadorTarjeta.getApellido() + ")");
 
             }
         }
@@ -300,7 +300,7 @@ public class Partido
 
     public void mostrarAmonestados(int[] tarjetasAmarillasLocal, int[] tarjetasRojasLocal,int[] tarjetasAmarillasVisitante, int[] tarjetasRojasVisitante) 
     {
-        System.out.println("Jugadores amonestados:");
+        System.out.println(PrintTexto.RESET + "Jugadores amonestados:");
         for (int i = 0; i < 11; i++) 
         {
             if (tarjetasAmarillasLocal[i] > 0 || tarjetasRojasLocal[i] > 0) 
