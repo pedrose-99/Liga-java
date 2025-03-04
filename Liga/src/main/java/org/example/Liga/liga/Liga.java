@@ -176,13 +176,13 @@ public class Liga
 	{
 		for (Jornada jornadaPrueba : jornadas)
 		{
-			System.out.println("--------------------------------------------------------------");
-			System.out.println("JORNADA " + jornadaPrueba.getNumJornada());
+			System.out.println(PrintTexto.BLUE + "--------------------------------------------------------------");
+			System.out.println(PrintTexto.RED + "JORNADA " + jornadaPrueba.getNumJornada());
 			for (Partido partidoPrueba : jornadaPrueba.getPartidos())
 			{
-				System.out.println(partidoPrueba.getEquipoLocal().getNombre() + " vs " + partidoPrueba.getEquipoVisitante().getNombre());
+				System.out.println(PrintTexto.GREEN +partidoPrueba.getEquipoLocal().getNombre() + " vs " + partidoPrueba.getEquipoVisitante().getNombre());
 			}
-			System.out.println("--------------------------------------------------------------");
+			System.out.println(PrintTexto.CYAN + "--------------------------------------------------------------");
 		}
 	}
 
@@ -223,14 +223,14 @@ public class Liga
 
     public void BienvenidoAlSimulador() //Esto en un bucle para ver que has elegido una de las 4 opciones.
     {
-        System.out.println("\nBIENVENIDO AL SIMULADOR DE LA XTART LEAGUE");
-        System.out.println("\nSELECCIONA UNA OPCIÓN PARA COMENZAR TU AVENTURA Y DISFRUTAR DE NUESTRA LIGA " + this.nombre.toUpperCase());
-        System.out.println("1. Ver Clasificación");
-        System.out.println("2. Simular Jornada");
-        System.out.println("3. Ver Jornadas");
-        System.out.println("4. Ver equipos");
-        System.out.println("5. Salir");
-        System.out.print("Elige una opción: ");
+        System.out.println(PrintTexto.BOLD + PrintTexto.WHITE + "\nBIENVENIDO AL SIMULADOR DE LA XTART LEAGUE");
+        System.out.println( PrintTexto.YELLOW + "\nSELECCIONA UNA OPCIÓN PARA COMENZAR TU AVENTURA Y DISFRUTAR DE NUESTRA LIGA " + this.nombre.toUpperCase());
+        System.out.println(PrintTexto.CYAN + "1. Ver Clasificación");
+        System.out.println(PrintTexto.GREEN + "2. Simular Jornada");
+        System.out.println(PrintTexto.PURPLE + "3. Ver Jornadas");
+        System.out.println(PrintTexto.RED + "4. Ver equipos");
+        System.out.println(PrintTexto.BOLD + "5. Salir");
+        System.out.print(PrintTexto.RESET + "Elige una opción: ");
     }
 
     public  void verClasificacion(int numJornada)
