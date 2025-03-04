@@ -1,4 +1,6 @@
-package org.example.Liga;
+package org.example.Liga.personas;
+
+import org.example.Liga.enumLiga.Continente;
 
 public class Entrenador extends Persona 
 {

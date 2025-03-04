@@ -1,4 +1,7 @@
-package org.example.Liga;
+package org.example.Liga.personas;
+
+import org.example.Liga.enumLiga.Continente;
+import org.example.Liga.enumLiga.Posicion;
 
 public class Jugador extends Persona
 {
@@ -81,6 +84,15 @@ public class Jugador extends Persona
     {
         this.stats = stats;
     }
+    public int getAsistencias() 
+    {
+        return asistencias;
+    }
+
+    public void setAsistencias(int asistencias) 
+    {
+        this.asistencias = asistencias;
+    }
 
     public void golNuevo()
     {
@@ -89,6 +101,14 @@ public class Jugador extends Persona
     public void asistencia()
     {
         this.asistencias ++;
+    }
+    public void amarilla()
+    {
+        this.tarjetasAmarillas ++;
+    }
+    public void roja()
+    {
+        this.tarjetasRojas ++;
     }
 
     @Override
@@ -118,5 +138,5 @@ public class Jugador extends Persona
             return false;
         return true;
     }
-    
+
 }

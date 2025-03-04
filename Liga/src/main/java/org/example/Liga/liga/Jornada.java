@@ -1,6 +1,8 @@
-package org.example.Liga;
+package org.example.Liga.liga;
 
 import java.util.ArrayList;
+
+import org.example.Liga.PrintTexto;
 
 public class Jornada 
 {
@@ -40,9 +42,16 @@ public class Jornada
         this.partidos.add(partido);
     }
 
-    public void jugarPartido()
+    public void simularJornada()
     {
-        
+        System.out.println(PrintTexto.RED + "-----------------------------------------");
+        System.out.println(PrintTexto.BLUE + "-----------------------------------------");
+        System.out.println(PrintTexto.GREEN + "Bienvenidos a la Jornada " + (this.numJornada));
+        System.out.println(PrintTexto.CYAN + "-----------------------------------------");
+        System.out.println(PrintTexto.PURPLE + "-----------------------------------------");
+        for (Partido partido : this.partidos)
+        {
+            partido.simularPartido();
+        }
     }
-
 }

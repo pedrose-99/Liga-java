@@ -1,6 +1,16 @@
-package org.example.Liga;
+package org.example.Liga.liga;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
+import java.util.Random;
+
+import org.example.Liga.PrintTexto;
+import org.example.Liga.enumLiga.Continente;
+import org.example.Liga.enumLiga.Posicion;
+import org.example.Liga.personas.Jugador;
+
+import com.github.javafaker.Faker;
 
 public class Equipo 
 {
@@ -13,6 +23,10 @@ public class Equipo
     private int puntos;
     private Partido[] partidos;
 
+    public Equipo()
+    {
+
+    }
     public Equipo(String nombre, Jugador[] jugadores)
     {
         this.nombre = nombre;
@@ -37,12 +51,12 @@ public class Equipo
     
     public void marcarGoles(int jugadorMarca)
     {
-        System.out.println(this.jugadores[jugadorMarca].getNombre() + " marca un gol");
+        System.out.println(PrintTexto.GREEN + this.jugadores[jugadorMarca].getNombre() + " marca un gol");
         this.jugadores[jugadorMarca].golNuevo();
     }
     public void darAsistencia (int jugadorAsiste)
     {
-        System.out.println(this.jugadores[jugadorAsiste].getNombre() + " ha dado la asistencia para el gol");
+        System.out.println(PrintTexto.GREEN + this.jugadores[jugadorAsiste].getNombre() + " ha dado la asistencia para el gol");
         this.jugadores[jugadorAsiste].asistencia();
     }
 
@@ -82,9 +96,12 @@ public class Equipo
     {
         return diferenciaGoles;
     }
+
+    
     public void setDiferenciaGoles(int diferenciaGoles) 
     {
         this.diferenciaGoles = diferenciaGoles;
+
     }
     public int getMediaStats() 
     {
@@ -113,13 +130,22 @@ public class Equipo
 
     public int calcularMediaEquipo()
     {
+        Random ran = new Random();
         int media = 0;
-        for(Jugador jugadorprueba : this.jugadores)
+        if (this.nombre.equals("Barcelona") || this.nombre.equals("Atletico de Madrid") || this.nombre.equals("Real Madrid"))
         {
-            media = media + jugadorprueba.getStats();
+            int dado = ran.nextInt(80, 90);
+            this.mediaStats = dado;
         }
-        media = media/this.jugadores.length;
-        this.mediaStats = media;
+        else
+        {
+            for(Jugador jugadorprueba : this.jugadores)
+            {
+                media = media + jugadorprueba.getStats();
+            }
+            media = media/this.jugadores.length;
+            this.mediaStats = media;
+        }
         return media;
     }
 
@@ -159,5 +185,101 @@ public class Equipo
         if (!Arrays.equals(partidos, other.partidos))
             return false;
         return true;
-    }    
+    }
+
+	public Jugador crearJugador(Posicion posicion, int numero)
+	{
+		Random ran = new Random();
+		String firstName;
+		String lastName;
+		int media;
+		Faker fakerEs = new Faker(new Locale("es")); //REDUCIR ESTOS 6
+		Faker fakerEn = new Faker(Locale.ENGLISH);
+		Faker fakerAs = new Faker(Locale.JAPAN);
+		Faker fakerAF = new Faker(new Locale("en", "NG"));
+		Faker fakerCN = new Faker(Locale.CANADA_FRENCH);
+		Faker fakerBR = new Faker(new Locale("pt-BR"));
+		int dado1;
+		Jugador jugador;
+		Continente continente;
+        if (numero == 0)
+        {
+		    dado1 = ran.nextInt(6);
+        }
+        else
+        {
+            dado1 = numero;
+        }
+		switch (dado1) {
+			case 1:
+				firstName = fakerEs.name().firstName();
+				lastName = fakerEs.name().lastName();
+				dado1 = ran.nextInt(70,90);
+				continente = Continente.EUROPA;
+				break;
+			case 2:
+				firstName = fakerAs.name().firstName();
+				lastName = fakerAs.name().lastName();
+				dado1 = ran.nextInt(70,90);
+				continente = Continente.ASIA;
+				break;			
+			case 3:
+				firstName = fakerCN.name().firstName();
+				lastName = fakerCN.name().lastName();
+				dado1 = ran.nextInt(70,90);
+				continente = Continente.NORTEAMERICA;
+				break;
+			case 4:
+				firstName = fakerBR.name().firstName();
+				lastName = fakerBR.name().lastName();
+				dado1 = ran.nextInt(70,90);
+				continente = Continente.SUDAMERICA;
+				break;
+			case 5:
+				firstName = fakerAF.name().firstName();
+				lastName = fakerAF.name().lastName();
+				dado1 = ran.nextInt(70,90);
+				continente = Continente.AFRICA;
+				break;
+			default:
+				firstName = fakerEn.name().firstName();
+				lastName = fakerEn.name().lastName();
+				dado1 = ran.nextInt(70,90);
+				continente = Continente.OCEANIA;
+				break;
+		}
+		jugador = new Jugador(firstName, lastName, continente, dado1, posicion);
+		return jugador;
+	}
+
+    public Equipo crearEquipo(String nombre, int numero)
+	{
+		int i;
+		Equipo equipoPrueba;
+		Jugador[] jugadores = new Jugador[11];
+
+		i = 0;
+		jugadores[i] = crearJugador(Posicion.PORTERO, numero);
+		i++;
+		while (i <= 4)
+		{
+			jugadores[i] = crearJugador(Posicion.DEFENSA, numero);
+			i++;
+		}
+		while (i <= 7)
+		{
+			jugadores[i] = crearJugador(Posicion.MEDIOCAMPISTA, numero);
+			i++;
+		}
+		while (i <= 10)
+		{
+			jugadores[i] = crearJugador(Posicion.DELANTERO, numero);
+			i++;
+		}
+		equipoPrueba = new Equipo(nombre, jugadores);
+		equipoPrueba.calcularMediaEquipo();
+
+		return (equipoPrueba);
+	}
+
 }
