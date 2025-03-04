@@ -249,14 +249,18 @@ public class Liga
         System.out.println(PrintTexto.YELLOW + "----- EQUIPOS ---------------- PT--------------");
 
         for (Equipo equipo : this.equipos) {
+            int golesAfavor = equipo.getGolesAfavor();
+            int golesEnContra = equipo.getGolesEnContra();
+            int diferenciaGoles = golesAfavor - golesEnContra;
+        
             if (i <= 4) {
-                System.out.println(PrintTexto.BLUE + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + PrintTexto.RESET);
+                System.out.println(PrintTexto.BLUE + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + " Pts, GF: " + golesAfavor + ", GC: " + golesEnContra + ", DG: " + diferenciaGoles + PrintTexto.RESET);
             } else if (i <= 6) {
-                System.out.println(PrintTexto.YELLOW + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + PrintTexto.RESET);
+                System.out.println(PrintTexto.YELLOW + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + " Pts, GF: " + golesAfavor + ", GC: " + golesEnContra + ", DG: " + diferenciaGoles + PrintTexto.RESET);
             } else if (i > this.equipos.size() - 3) {
-                System.out.println(PrintTexto.RED + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + PrintTexto.RESET);
+                System.out.println(PrintTexto.RED + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + " Pts, GF: " + golesAfavor + ", GC: " + golesEnContra + ", DG: " + diferenciaGoles + PrintTexto.RESET);
             } else {
-                System.out.println(PrintTexto.WHITE + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + PrintTexto.RESET);
+                System.out.println(PrintTexto.WHITE + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + " Pts, GF: " + golesAfavor + ", GC: " + golesEnContra + ", DG: " + diferenciaGoles + PrintTexto.RESET);
             }
             i++;
         }

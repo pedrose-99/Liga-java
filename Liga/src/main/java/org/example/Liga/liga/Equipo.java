@@ -96,9 +96,12 @@ public class Equipo
     {
         return diferenciaGoles;
     }
+
+    
     public void setDiferenciaGoles(int diferenciaGoles) 
     {
         this.diferenciaGoles = diferenciaGoles;
+
     }
     public int getMediaStats() 
     {
