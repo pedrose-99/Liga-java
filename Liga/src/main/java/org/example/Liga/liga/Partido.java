@@ -95,7 +95,7 @@ public class Partido
                 golesEquipo2 = simularGolMayorMedia(minutoActual, golesEquipo2, this.equipoLocal, eventos, ran, false);
                 golesEquipo1 = simularGolMenorMedia(minutoActual, golesEquipo1, this.equipoVisitante, eventos, ran, true);
             }
-            simularTarjetas(minutoActual, tarjetasAmarillasLocal, tarjetasRojasLocal, tarjetasAmarillasVisitante, tarjetasRojasVisitante, eventos, ran);
+            //simularTarjetas(minutoActual, tarjetasAmarillasLocal, tarjetasRojasLocal, tarjetasAmarillasVisitante, tarjetasRojasVisitante, eventos, ran);
         }
         
         mostrarEventos(eventos);
@@ -261,14 +261,14 @@ public class Partido
         {
             tarjetasAmarillas[jugador]++;
             Jugador jugadorTarjeta = equipo.getJugadores()[jugador];
-            equipo.getJugadores()[jugadorTarjeta].amarilla();  
+            equipo.getJugadores()[jugador].amarilla();  
             eventos.add( PrintTexto.YELLOW + minutoTarjeta + ": Tarjeta amarilla para " + equipo.getNombre() + " (" + jugadorTarjeta.getNombre() + " " + jugadorTarjeta.getApellido() + ")");
 
             
             if (tarjetasAmarillas[jugador] == 2) 
             {
                 tarjetasRojas[jugador] = 1;
-                equipo.getJugadores()[jugadorTarjeta].roja();  
+                equipo.getJugadores()[jugador].roja();  
                 eventos.add(PrintTexto.RED + minutoTarjeta + ": ¡Expulsión! Tarjeta roja para " + equipo.getNombre() + " (" + jugadorTarjeta.getNombre() + " " + jugadorTarjeta.getApellido() + ")");
 
             }
