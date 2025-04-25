@@ -1,0 +1,59 @@
+pipeline {
+    agent any
+
+    environment {
+        MAVEN_OPTS = '-Dmaven.repo.local=.m2/repository'
+        SONAR_TOKEN = credentials('sonar-token-id') // Agrega esto en Jenkins > Credentials
+    }
+
+    tools {
+        maven 'Maven 3' // Asegúrate de tener este nombre en tu configuración global de Jenkins
+        jdk 'Java 17'   // O Java 11, dependiendo de tu proyecto
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/pedrose-99/Liga-java.git', branch: 'main'
+            }
+        }
+
+        stage('Compilar') {
+            steps {
+                sh 'mvn clean compile'
+            }
+        }
+
+        stage('Pruebas') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('Análisis con SonarQube') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh 'mvn sonar:sonar -Dsonar.login=$SONAR_TOKEN'
+                }
+            }
+        }
+
+        stage('Empaquetar') {
+            steps {
+                sh 'mvn package'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline finalizado.'
+        }
+        success {
+            echo 'Éxito total 🙌'
+        }
+        failure {
+            echo 'Algo falló 😢'
+        }
+    }
+}

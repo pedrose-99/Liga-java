@@ -77,20 +77,15 @@ public class VariasLigas
             switch (opcion) 
             {
                 case 1:
-					//Ver clasificaciones
 					verClasificaciones(ligas, numJornada);
                     break;
                 case 2:
-					//Simular Jornadas
 					simularJornadas(ligas, numJornada);
 					numJornada++;
                     break;
                 case 3:
-					//Ver medias Equipos
 					verMediaEquipos(ligas);
-                	//Salir
 				case 4:
-					//Salir
                     break ;
                 default:
                     System.out.println(PrintTexto.RED + "Opción no válida, intenta de nuevo.");

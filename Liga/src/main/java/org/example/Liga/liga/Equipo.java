@@ -128,6 +128,13 @@ public class Equipo
         this.partidos = partidos;
     }
 
+    public void calcularGoles(int goleFavor, int golesContra)
+    {
+        this.golesAfavor = this.golesAfavor + goleFavor;
+        this.golesEnContra = this.golesEnContra + golesContra;
+        this.diferenciaGoles = this.golesAfavor - this.golesEnContra;
+    }
+    
     public int calcularMediaEquipo()
     {
         Random ran = new Random();

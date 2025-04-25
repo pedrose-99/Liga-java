@@ -95,7 +95,7 @@ public class Partido
                 golesEquipo2 = simularGolMayorMedia(minutoActual, golesEquipo2, this.equipoLocal, eventos, ran, false);
                 golesEquipo1 = simularGolMenorMedia(minutoActual, golesEquipo1, this.equipoVisitante, eventos, ran, true);
             }
-            //simularTarjetas(minutoActual, tarjetasAmarillasLocal, tarjetasRojasLocal, tarjetasAmarillasVisitante, tarjetasRojasVisitante, eventos, ran);
+            simularTarjetas(minutoActual, tarjetasAmarillasLocal, tarjetasRojasLocal, tarjetasAmarillasVisitante, tarjetasRojasVisitante, eventos, ran);
         }
         
         mostrarEventos(eventos);
@@ -185,6 +185,7 @@ public class Partido
             golesEquipo++;
             int marcarGol = ran.nextInt(1, 11);
             Jugador goleador = equipo.getJugadores()[marcarGol - 1]; 
+            equipo.getJugadores()[marcarGol-1].golNuevo();
             eventos.add(minutoActual + ": Gol del " + equipo.getNombre() + " (" + goleador.getNombre() + " " + goleador.getApellido() + ")");
             
             if (ran.nextInt(10) <= 7) 
@@ -196,6 +197,7 @@ public class Partido
                 } 
                 while (darAsistencia == marcarGol);            
                 Jugador asistente = equipo.getJugadores()[darAsistencia - 1]; 
+                equipo.getJugadores()[darAsistencia-1].asistencia(); 
                 eventos.add(minutoActual + ": Asistencia del " + equipo.getNombre() + " (" + asistente.getNombre() + " " + asistente.getApellido() + ")");
             }
         }
@@ -262,25 +264,28 @@ public class Partido
             tarjetasAmarillas[jugador]++;
             Jugador jugadorTarjeta = equipo.getJugadores()[jugador];
             equipo.getJugadores()[jugador].amarilla();  
-            eventos.add( PrintTexto.YELLOW + minutoTarjeta + ": Tarjeta amarilla para " + equipo.getNombre() + " (" + jugadorTarjeta.getNombre() + " " + jugadorTarjeta.getApellido() + ")");
+            eventos.add(minutoTarjeta + ": Tarjeta amarilla para " + equipo.getNombre() + " (" + jugadorTarjeta.getNombre() + " " + jugadorTarjeta.getApellido() + ")");
 
             
             if (tarjetasAmarillas[jugador] == 2) 
             {
                 tarjetasRojas[jugador] = 1;
                 equipo.getJugadores()[jugador].roja();  
-                eventos.add(PrintTexto.RED + minutoTarjeta + ": ¡Expulsión! Tarjeta roja para " + equipo.getNombre() + " (" + jugadorTarjeta.getNombre() + " " + jugadorTarjeta.getApellido() + ")");
+                eventos.add(minutoTarjeta + ": ¡Expulsión! Tarjeta roja para " + equipo.getNombre() + " (" + jugadorTarjeta.getNombre() + " " + jugadorTarjeta.getApellido() + ")");
 
             }
         }
     }
+    
     public boolean porteroAtaja(Random ran, boolean esLocal) {
         int dadoPortero = ran.nextInt(10);
         if (dadoPortero <= 4) {
             if (esLocal) {
-                paradasPorteroVisitante++;
+                this.equipoLocal.getJugadores()[0].parada();
+                this.paradasPorteroLocal++;
             } else {
-                paradasPorteroLocal++;
+                this.equipoVisitante.getJugadores()[0].parada();
+                this.paradasPorteroVisitante++;
             }
             return true;
         }
@@ -339,6 +344,8 @@ public class Partido
             this.equipoLocal.setPuntos(this.equipoLocal.getPuntos() + 1);
             this.equipoVisitante.setPuntos(this.equipoVisitante.getPuntos() + 1);
         }
+        this.equipoLocal.calcularGoles(golesEquipo1, golesEquipo2);
+        this.equipoVisitante.calcularGoles(golesEquipo2, golesEquipo1);
     }
 
     @Override

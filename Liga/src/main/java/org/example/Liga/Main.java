@@ -39,7 +39,6 @@ public class Main {
                     System.out.println(PrintTexto.GREEN + "Iniciando la liga..." + PrintTexto.BLUE);
                     Liga liga = new Liga(equipos1, false);
                     liga.menuLiga();
-                    //Poner opcion de jugar el mundial
                     break;
                 case 2:
                     System.out.println(PrintTexto.GREEN + "Iniciando varias ligas..." + PrintTexto.BLUE);

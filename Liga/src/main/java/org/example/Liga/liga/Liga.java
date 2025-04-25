@@ -11,7 +11,6 @@ import java.util.Scanner;
 import org.example.Liga.GestionNumero;
 import org.example.Liga.PrintTexto;
 import org.example.Liga.personas.Jugador;
-import org.example.Liga.personas.Portero;
 
 import com.github.javafaker.Faker;
 
@@ -146,21 +145,22 @@ public class Liga
         }
         System.out.println("Más sancionado de la liga: " + masSancionado.getNombre() + " con " + masSancionado.getTarjetasAmarillas() + " tarjetas amarillas.");
     }
+
     public void maximasParadas()
     {
-        Portero masParadas = null;
+        Jugador masParadas = null;
         
         for (Equipo equipo : this.equipos) 
         {
-            for (Portero portero : equipo.getPortero()) 
+            for (Jugador jugador : equipo.getJugadores()) 
             {
-                if (masParadas == null || portero.getParadas()() > masParadas.getParadas()) 
+                if (masParadas == null || jugador.getParadas() > masParadas.getParadas()) 
                 {
-                    masParadas = portero;
+                    masParadas = jugador;
                 }
             }
         }
-        System.out.println("Más paradas de la liga y trofeo zamora: " + masParadas.getNombre() + " con " + masParadas.getParadas() + " paradas.");
+        System.out.println("Premio Zamora: " + masParadas.getNombre() + " con " + masParadas.getParadas() + " Paradas.");
     }
 
     public void calcularMaximos() 
@@ -221,7 +221,7 @@ public class Liga
 		return (jornadas);
 	}
 
-    public void BienvenidoAlSimulador() //Esto en un bucle para ver que has elegido una de las 4 opciones.
+    public void BienvenidoAlSimulador()
     {
         System.out.println(PrintTexto.BOLD + PrintTexto.WHITE + "\nBIENVENIDO AL SIMULADOR DE LA XTART LEAGUE");
         System.out.println( PrintTexto.YELLOW + "\nSELECCIONA UNA OPCIÓN PARA COMENZAR TU AVENTURA Y DISFRUTAR DE NUESTRA LIGA " + this.nombre.toUpperCase());
@@ -254,13 +254,13 @@ public class Liga
             int diferenciaGoles = golesAfavor - golesEnContra;
         
             if (i <= 4) {
-                System.out.println(PrintTexto.BLUE + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + " Pts, GF: " + golesAfavor + ", GC: " + golesEnContra + ", DG: " + diferenciaGoles + PrintTexto.RESET);
+                System.out.println(PrintTexto.BLUE + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + " Pts, GF: " + golesAfavor + ", GC: " + golesEnContra  + PrintTexto.RESET);
             } else if (i <= 6) {
-                System.out.println(PrintTexto.YELLOW + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + " Pts, GF: " + golesAfavor + ", GC: " + golesEnContra + ", DG: " + diferenciaGoles + PrintTexto.RESET);
+                System.out.println(PrintTexto.YELLOW + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + " Pts, GF: " + golesAfavor + ", GC: " + golesEnContra +  PrintTexto.RESET);
             } else if (i > this.equipos.size() - 3) {
-                System.out.println(PrintTexto.RED + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + " Pts, GF: " + golesAfavor + ", GC: " + golesEnContra + ", DG: " + diferenciaGoles + PrintTexto.RESET);
+                System.out.println(PrintTexto.RED + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + " Pts, GF: " + golesAfavor + ", GC: " + golesEnContra + PrintTexto.RESET);
             } else {
-                System.out.println(PrintTexto.WHITE + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + " Pts, GF: " + golesAfavor + ", GC: " + golesEnContra + ", DG: " + diferenciaGoles + PrintTexto.RESET);
+                System.out.println(PrintTexto.WHITE + i + ". " + equipo.getNombre() + "-------------" + equipo.getPuntos() + " Pts, GF: " + golesAfavor + ", GC: " + golesEnContra  + PrintTexto.RESET);
             }
             i++;
         }
@@ -315,11 +315,6 @@ public class Liga
                 System.out.println("La liga "+ this.nombre.toUpperCase() +" ha acabado.");
                 equiposClasificacion = this.getEquipos();
                 verClasificacion( numJornada);
-                maximoGoleador();
-                maximoAsistente();
-                maximasParadas();
-                masAmarillas();
-                masRojas();
                 System.out.println("-----------------------");
             }
             else
@@ -330,24 +325,19 @@ public class Liga
             switch (opcion) 
             {
                 case 1:
-                    //Ver Clasificacion
                     equiposClasificacion = this.getEquipos();
                     verClasificacion(numJornada);
                     break;
                 case 2:
-                    //Simular Jornada
                     this.getJornadas().get(numJornada).simularJornada();
                     break;
                 case 3:
-                //Imprimir jornadas
                     this.imprimirJornadas(jornadas);
                     break ;
                 case 4:
-                //Ver equipos y sus medias
                     verEquipos(this.getEquipos());
                     break ;
                 case 5:
-                    //Salir
                     break ;
                 default:
                     System.out.println(PrintTexto.RED + "Opción no válida, intenta de nuevo.");
@@ -374,6 +364,7 @@ public class Liga
                 equiposClasificacion = this.getEquipos();
                 verClasificacion( numJornada);
                 System.out.println("-----------------------");
+                calcularMaximos();
             }
             else
             {
@@ -383,25 +374,20 @@ public class Liga
             switch (opcion) 
             {
                 case 1:
-                    //Ver Clasificacion
                     equiposClasificacion = this.getEquipos();
                     verClasificacion( numJornada);
                     break;
                 case 2:
-                    //Simular Jornada
                     this.getJornadas().get(numJornada).simularJornada();
                     numJornada++;
                     break;
                 case 3:
-                //Imprimir jornadas
                     this.imprimirJornadas(jornadas);
                     break ;
                 case 4:
-                //Ver equipos y sus medias
                     verEquipos(this.getEquipos());
                     break ;
                 case 5:
-                    //Salir
                     break ;
                 default:
                     System.out.println(PrintTexto.RED + "Opción no válida, intenta de nuevo.");
@@ -416,18 +402,15 @@ public class Liga
         equipoGanador = 0;
         if (numPuntos == (this.equipos.get(index1).getPuntos()))
         {
-            System.out.println("Gano Equipo " + index2);
             equipoGanador = index2;
         }
         else if ((numPuntos + 1) == this.equipos.get(index1).getPuntos())
         {
             System.out.println("Hubo empate, ir a penaltis");
-            //Funcion penaltis
             equipoGanador = partidoAux.simularPenaltis(index1, index2);
         }
         else
         {
-            System.out.println("Gano equipo " + index1);
             equipoGanador = index1;
         }
         return equipoGanador;
@@ -445,17 +428,27 @@ public class Liga
         partidoaux = new Partido(this.equipos.get(0), this.equipos.get(3));
         partidoaux.simularPartido();
         indexGanadores[0] = eliminatiroaMundial(0,3, numPuntos1, partidoaux);
+        System.out.println("--------------------");
+        System.out.println("Gano la selección: " + this.equipos.get(indexGanadores[0]).getNombre());
+        System.out.println("--------------------");
         System.out.println("SEMIFINALES");
         System.out.println("Equipo 2: " +this.equipos.get(1).getNombre() +" vs Equipo 3: " + this.equipos.get(2).getNombre());
         partidoaux = new Partido(this.equipos.get(1), this.equipos.get(2));
         partidoaux.simularPartido();
-        indexGanadores[1] = eliminatiroaMundial(1,2, numPuntos1, partidoaux);
+        indexGanadores[1] = eliminatiroaMundial(1,2, numPuntos2, partidoaux);
+        System.out.println("--------------------");
+        System.out.println("Gano la selección: " + this.equipos.get(indexGanadores[1]).getNombre());
+        System.out.println("--------------------");
         System.out.println("FINAL");
         System.out.println("Equipo : " +this.equipos.get(indexGanadores[0]).getNombre() +" vs Equipo : " + this.equipos.get(indexGanadores[1]).getNombre());
         partidoaux = new Partido(this.equipos.get(indexGanadores[0]), this.equipos.get(indexGanadores[1]));
         partidoaux.simularPartido();
         numPuntos1 = this.equipos.get(indexGanadores[0]).getPuntos();
         indexGanadores[0] = eliminatiroaMundial(indexGanadores[0], indexGanadores[1], numPuntos1, partidoaux);
+        System.out.println("--------------------");
+        System.out.println("Gano el MUNDIAL la selección: " + this.equipos.get(indexGanadores[0]).getNombre());
+        System.out.println("--------------------");
+        calcularMaximos();
     }
 
 }
